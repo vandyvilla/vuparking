@@ -1,6 +1,14 @@
 #summary Functionalities to implement in this project.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+This application includes the following functionalities.
+* When user log in, the program prompt the type of parking, zone, and permits…choose if to display disability parking.
+* Zone chosen, display specific map with available place marked, as well as car location, 
+* Available places vary with time, and different regulation;
+* Search around some building;
+* Display parking information (rate, distance based on your current location) and policy, street view, zoom in/out. 
+* When click on garage, display layout and parking info for each floor;
+* Close to real time updating of available parking;
+* Compute the best parking according to distance, rate, comments;
+* Add comments;
+* User can store his preferred place and see if it is available right now, change based on your destination building. 
+* Potential: apply to city range. 
