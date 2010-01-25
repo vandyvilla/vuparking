@@ -1,8 +1,8 @@
 #summary Functionalities to implement in this project.
 
 This application includes the following functionalities.
-* When user log in, the program prompt the type of parking, zone, and permits…choose if to display disability parking.
-* Zone chosen, display specific map with available place marked, as well as car location, 
+  * When user log in, the program prompt the type of parking, zone, and permits…choose if to display disability parking.
+  * Zone chosen, display specific map with available place marked, as well as car location, 
 * Available places vary with time, and different regulation;
 * Search around some building;
 * Display parking information (rate, distance based on your current location) and policy, street view, zoom in/out. 
