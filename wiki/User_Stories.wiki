@@ -8,6 +8,6 @@
   * Users can view real-time updating available parking spots.
   * Users can view parking information such as distance between current position and destination parking spot, parking rates, parking policy and street view.
   * Users can view garage information such as the number of parking spots of each floor, garage layout with available parking spots marked.
-  * Users can let the system compute the best parking spot for them according to the   * distance, rates, user rating and comments.
+  * Users can let the system compute the best parking spot for them according to the distance, rates, user rating and comments.
   * Users can rate and comment for a parking spot or a garage.
   * Users can store their preferred parking spots as default setting and view them when the application starts up.
