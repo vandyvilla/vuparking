@@ -2,11 +2,11 @@
 
   * Users can save personal information such as user type and parking zone. 
   * Users can view a map with parking lots and zones marked. 
+  * Users can view parking rates and parking policy.
   * Users can choose to display disabled parking lots or not. 
   * Users can zoom in and zoom out the map. 
   * Users can search a destination and view available parking lots around there. 
   * Users can view real-time updating available parking lots.
-  * Users can view parking rates and parking policy.
 
   * Users can view parking distance between current position and destination parking lot,  and street view.
   * Users can view garage information such as the number of parking lots of each floor, garage layout with available parking lots marked.
