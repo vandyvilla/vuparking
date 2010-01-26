@@ -1,4 +1,4 @@
-#summary Long-term Objective & Bi-weekly Build Cycle
+#summary Long-term Objective & Bi-weekly Build Cycle User Stories
 
   * Users can save personal information such as user type and parking zone. 
   * Users can view a map with parking lots and zones marked. 
