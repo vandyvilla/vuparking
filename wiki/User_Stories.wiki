@@ -1,4 +1,4 @@
-#summary Functionalities to implement in this project.
+#summary Long-term Objective
 
   * Users can store personal information such as user type and parking zone. (Yuan)
   * Users can view a map with parking spots and zones marked. (Yuan)
