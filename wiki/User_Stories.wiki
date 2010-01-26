@@ -11,3 +11,8 @@
   * Users can let the system compute the best parking spot for them according to the distance, rates, user rating and comments. (Xiaowei)
   * Users can rate and comment for a parking spot or a garage. (Xiaowei)
   * Users can store their preferred parking spots as default setting and view them when the application starts up. (Yuan)
+
+
+1st Bi-weekly build cycle user stories:
+  * User can see all parking lot information marked on Google Map and shown on Android; (Xiaowei)
+  * User can choose and save user type. (Yuan)
