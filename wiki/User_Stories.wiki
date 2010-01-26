@@ -1,16 +1,16 @@
 #summary Long-term Objective
 
-  * Users can store personal information such as user type and parking zone. (Yuan)
-  * Users can view a map with parking spots and zones marked. (Yuan)
-  * Users can choose to display disabled parking spot or not. (Yuan)
-  * Users can zoom in and zoom out the map. (Yuan)
-  * Users can search a destination and view available parking spot around there. (Xiaowei)
-  * Users can view real-time updating available parking spots. (Xiaowei)
-  * Users can view parking information such as distance between current position and destination parking spot, parking rates, parking policy and street view. (Xiaowei)
-  * Users can view garage information such as the number of parking spots of each floor, garage layout with available parking spots marked. (Xiaowei)
-  * Users can let the system compute the best parking spot for them according to the distance, rates, user rating and comments. (Xiaowei)
-  * Users can rate and comment for a parking spot or a garage. (Xiaowei)
-  * Users can store their preferred parking spots as default setting and view them when the application starts up. (Yuan)
+  * Users can store personal information such as user type and parking zone. 
+  * Users can view a map with parking spots and zones marked. 
+  * Users can choose to display disabled parking spot or not. 
+  * Users can zoom in and zoom out the map. 
+  * Users can search a destination and view available parking spots around there. 
+  * Users can view real-time updating available parking spots.
+  * Users can view parking information such as distance between current position and destination parking spot, parking rates, parking policy and street view.
+  * Users can view garage information such as the number of parking spots of each floor, garage layout with available parking spots marked.
+  * Users can let the system compute the best parking spot for them according to the distance, rates, user rating and comments. 
+  * Users can rate and comment for a parking spot or a garage. 
+  * Users can store their preferred parking spots as default setting and view them when the application starts up. 
 
 
 1st Bi-weekly build cycle user stories:
