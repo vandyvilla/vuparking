@@ -1,18 +1,19 @@
-#summary Long-term Objective
+#summary Long-term Objective & Bi-weekly Build Cycle
 
-  * Users can store personal information such as user type and parking zone. 
-  * Users can view a map with parking spots and zones marked. 
-  * Users can choose to display disabled parking spot or not. 
+  * Users can save personal information such as user type and parking zone. 
+  * Users can view a map with parking lots and zones marked. 
+  * Users can choose to display disabled parking lots or not. 
   * Users can zoom in and zoom out the map. 
-  * Users can search a destination and view available parking spots around there. 
-  * Users can view real-time updating available parking spots.
-  * Users can view parking information such as distance between current position and destination parking spot, parking rates, parking policy and street view.
-  * Users can view garage information such as the number of parking spots of each floor, garage layout with available parking spots marked.
-  * Users can let the system compute the best parking spot for them according to the distance, rates, user rating and comments. 
-  * Users can rate and comment for a parking spot or a garage. 
-  * Users can store their preferred parking spots as default setting and view them when the application starts up. 
+  * Users can search a destination and view available parking lots around there. 
+  * Users can view real-time updating available parking lots.
+
+  * Users can view parking information such as distance between current position and destination parking lot, parking rates, parking policy and street view.
+  * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
+  * Users can rate and comment for a parking lot or a garage. 
+  * Users can store their preferred parking lots as default setting and view them when the application starts up. 
+  * Users can view garage information such as the number of parking lots of each floor, garage layout with available parking lots marked.
 
 
 1st Bi-weekly build cycle user stories:
-  * User can see all parking lot information marked on Google Map and shown on Android; (Xiaowei)
-  * User can choose and save user type. (Yuan)
+  * Users can view parking lots and zones marked on Google Map and shown on Android; (Xiaowei)
+  * Users can choose and save user type and parking zone. (Yuan)
