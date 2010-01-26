@@ -13,6 +13,6 @@
   * Users can store their preferred parking spots as default setting and view them when the application starts up. (Yuan)
 
 
-%red% 1st Bi-weekly build cycle user stories:
+1st Bi-weekly build cycle user stories:
   * User can see all parking lot information marked on Google Map and shown on Android; (Xiaowei)
   * User can choose and save user type. (Yuan)
