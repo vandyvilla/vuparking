@@ -1,6 +1,7 @@
 package edu.vanderbilt.vuparking;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -23,22 +24,21 @@ public class showMap extends MapActivity {
 	MapView mapView;
 	MapController mc;
 	GeoPoint p1, p2;
+	List<GeoPoint> markers;
 	
 	class MapOverlay extends com.google.android.maps.Overlay
 	{
 		public boolean draw (Canvas canvas, MapView mapView, boolean shadow, long when)
 		{
 			super.draw(canvas, mapView, shadow);
-			Point screenPts1 = new Point();
-			Point screenPts2 = new Point();
-			mapView.getProjection().toPixels(p1, screenPts1);
-			mapView.getProjection().toPixels(p2, screenPts2);
-			
-			Bitmap bmp1 = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
-	            canvas.drawBitmap(bmp1, screenPts1.x, screenPts1.y-20, null);
-	            
-	        Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
-	            canvas.drawBitmap(bmp2, screenPts2.x, screenPts2.y-20, null);
+			for (ListIterator<GeoPoint> it = markers.listIterator(); it.hasNext();)
+			{
+				Point screenPts = new Point();
+				GeoPoint p = it.next();
+				mapView.getProjection().toPixels(p, screenPts);
+				Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
+	            canvas.drawBitmap(bmp, screenPts.x, screenPts.y-20, null);				
+			}
 	        return true;
 	     }
 	}
@@ -61,8 +61,23 @@ public class showMap extends MapActivity {
         mapView.displayZoomControls(true);
         //mapView.setStreetView(true);
         
-        mc = mapView.getController();
-        String coordinates[] = {"36.14171","-86.803669"};
+        loadMarker();
+        setCenter(p1, 17);
+        showMarker();
+        mapView.invalidate();
+	}
+	
+	
+	
+	public void setCenter(GeoPoint p, int zoomLevel){
+		mc = mapView.getController();
+		mc.animateTo(p);
+		mc.setZoom(zoomLevel);
+	}
+	
+	public void loadMarker(){     // For future remote server interaction. 
+		
+		String coordinates[] = {"36.14171","-86.803669"};
         double lat = Double.parseDouble(coordinates[0]);
         double lng = Double.parseDouble(coordinates[1]);
         
@@ -71,20 +86,19 @@ public class showMap extends MapActivity {
         double lng1 = Double.parseDouble(coordinates2[1]);
         
         p1 = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
-        mc.animateTo(p1);
-        mc.setZoom(17);
-         
         p2 = new GeoPoint((int)(lat1*1E6),(int)(lng1*1E6));
+        
+        markers.add(p1);
+        markers.add(p2);
+	}
+	
+	public void showMarker(){
         
         MapOverlay mapOverlay = new MapOverlay();
         List<Overlay> listOfOverlays = mapView.getOverlays();
         listOfOverlays.clear();
         listOfOverlays.add(mapOverlay);
-        
-        mapView.invalidate();
 	}
-	
-	
 	
 	@Override
 	protected boolean isRouteDisplayed()
