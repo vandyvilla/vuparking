@@ -15,7 +15,7 @@
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
 
 2nd Bi-weekly build cycle user stories:
-  * User can see detailed parking information when click on the marker on map; (Xiaowei)
+  * User can see detailed parking information when click on the marker on map (rates, address, garage capacity); (Xiaowei)
   * User can see parking zones overlaid with different colors. (Yuan)
 
 1st Bi-weekly build cycle user stories:
