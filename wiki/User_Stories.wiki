@@ -14,6 +14,9 @@
   * Users can rate and comment for a parking lot or a garage. 
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
 
+2nd Bi-weekly build cycle user stories:
+  * User can see detailed parking information when click on the marker on map; (Xiaowei)
+  * User can see different parking spots based on the chosen zone (user settings). (Yuan)
 
 1st Bi-weekly build cycle user stories:
   * Users can view parking lots and zones marked on Google Map and shown on Android; (Xiaowei)
