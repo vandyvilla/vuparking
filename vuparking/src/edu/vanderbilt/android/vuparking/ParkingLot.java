@@ -6,7 +6,8 @@ public class ParkingLot {
 	private int zone;
 	private int id;
 	private String name;
-	private double coordinates[];
+	//private double coordinates[];
+	private double coordinate_x, coordinate_y;
 	private String address;
 	private int num_spot;
 	private int num_disable;
@@ -15,7 +16,8 @@ public class ParkingLot {
 	public int getId() { return id; }
 	public String getName() { return name; }
 	public int getZone() { return zone; }
-	public double[] getCoordinates() { return coordinates; }
+	public double getLatitude() { return coordinate_x; }
+	public double getLongtitude() { return coordinate_y; }
 	public String getAddress() { return address; }
 	public int getNumSpot() { return num_spot; }
 	public int getNumDisable() { return num_disable; }
@@ -23,7 +25,7 @@ public class ParkingLot {
 	
 	public void setId(int ID) { id = ID; }
 	public void setName(String Name) { name = Name; }
-	public void setCoordinates(double x, double y) { coordinates[0] = x;  coordinates[1] = y; }
+	public void setCoordinates(double x, double y) { coordinate_x = x;  coordinate_y = y; }
 	public void setAddress(String addr) { address = addr; }
 	public void setNumSpot(int num) { num_spot = num; }
 	public void setNumDisable(int num) { num_disable = num; }
@@ -38,6 +40,7 @@ public class ParkingLot {
 		setAddress(address);
 		setNumSpot(num_spot);
 		setNumDisable(num_disable);
+		setNumAvailable(num_spot);
 	}
 	
 }

@@ -14,7 +14,7 @@
  *   limitations under the License.                                          *
  ****************************************************************************/
 
-// This file is written for Android SQLite Database access. 
+// This file is written for accessing SQLite Database, Adapter Pattern. 
 
 package edu.vanderbilt.android.vuparking;
 
@@ -47,7 +47,7 @@ public class ParkingDBAdapter {
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =
-        "create table titles (_id integer primary key autoincrement, "
+        "create table parkinglots (_id integer primary key autoincrement, "
         + "name text not null, address text, " 
         + "zone integer not null, capacity integer not null, "
         + "available integer not null, disable integer not null, "
@@ -112,12 +112,12 @@ public class ParkingDBAdapter {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAME, p.getName());
         initialValues.put(KEY_ADDRESS, p.getAddress());
-        initialValues.put(KEY_COORDINATE_X, p.getCoordinates()[0]);
-        initialValues.put(KEY_COORDINATE_Y, p.getCoordinates()[1]);
-        initialValues.put(KEY_CAPACITY, p.getNumSpot());
         initialValues.put(KEY_ZONE, p.getZone());
+        initialValues.put(KEY_CAPACITY, p.getNumSpot());    
         initialValues.put(KEY_AVAILABLE, p.getNumAvailabe());
         initialValues.put(KEY_DISABLE, p.getNumDisable());
+        initialValues.put(KEY_COORDINATE_X, Double.toString(p.getLatitude()));
+        initialValues.put(KEY_COORDINATE_Y, Double.toString(p.getLongtitude()));  
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -186,8 +186,8 @@ public class ParkingDBAdapter {
         ContentValues args = new ContentValues();
         args.put(KEY_NAME, p.getName());
         args.put(KEY_ADDRESS, p.getAddress());
-        args.put(KEY_COORDINATE_X, p.getCoordinates()[0]);
-        args.put(KEY_COORDINATE_Y, p.getCoordinates()[1]);
+        args.put(KEY_COORDINATE_X, p.getLatitude());
+        args.put(KEY_COORDINATE_Y, p.getLongtitude());
         args.put(KEY_CAPACITY, p.getNumSpot());
         args.put(KEY_ZONE, p.getZone());
         args.put(KEY_AVAILABLE, p.getNumAvailabe());

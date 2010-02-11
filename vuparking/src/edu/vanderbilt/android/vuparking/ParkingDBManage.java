@@ -14,8 +14,8 @@
  *   limitations under the License.                                          *
  ****************************************************************************/
 
-// This file is written for Android SQLite Database initialization, sync with remote server,
-// commit and management. 
+// This file is written for managing SQLite DB based on DBAdapter, including initialization, sync (update) with server
+// and refreshing. 
 
 package edu.vanderbilt.android.vuparking;
 
@@ -64,11 +64,14 @@ public class ParkingDBManage
 		lots.add(new ParkingLot(15, "South garage", VISITOR, 36.139324, -86.804879, "1598 24th Ave S", 50, 10));
 		lots.add(new ParkingLot(16, "Planet beach", VISITOR, 36.145770, -86.799182, "2099 Scarritt Pl", 20, 0));
 		
+		if (adapter == null)
+			adapter = new ParkingDBAdapter(Main.appContext);
 		adapter.open();
 		long id;
 		for (ListIterator<ParkingLot> it = lots.listIterator(); it.hasNext();)
 		{
-			adapter.insertLot(it.next());
+			id = adapter.insertLot(it.next());
+			if (id == -1) break;
 		}
 		adapter.close();
 	}
