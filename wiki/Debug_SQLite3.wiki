@@ -1,6 +1,6 @@
 #How to debug SQLite3 DB from Command Shell
 
-= Introduction =
+= Steps =
 
 1. Run the emulator;
 
