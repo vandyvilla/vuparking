@@ -1,4 +1,4 @@
-##How to debug SQLite3 DB from Command Shell
+#summary How to debug SQLite3 DB from Command Shell
 
 = Steps =
 
