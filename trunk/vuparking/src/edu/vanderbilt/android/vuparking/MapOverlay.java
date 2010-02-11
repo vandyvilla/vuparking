@@ -14,7 +14,8 @@
  *   limitations under the License.                                          *
  ****************************************************************************/
 
-// This file is written for creating and managing markers shown on map.
+// This file is written for creating and managing overlay items shown on map, including retrieving data from DB, adding
+// overlay onto mapView. 
 
 package edu.vanderbilt.android.vuparking;
 

@@ -19,6 +19,7 @@ package edu.vanderbilt.android.vuparking;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,14 +31,14 @@ import java.io.*;
 
 public class Main extends Activity {
     /** Called when the activity is first created. */
-	//public static Context appContext;
+	public static Context appContext;
 	int UserChoice = 0;    // Default: Visitor
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //if (appContext == null)
-        //    appContext = getApplicationContext();
+        if (appContext == null)
+            appContext = getApplicationContext();
         if ((new File("data/data/edu.vanderbilt.android.vuparking/user.txt")).exists()) {
         	try {
         		BufferedReader in = new BufferedReader(new FileReader("data/data/edu.vanderbilt.android.vuparking/user.txt"));
@@ -50,7 +51,14 @@ public class Main extends Activity {
         }
         
         setContentView(R.layout.main);
- 
+        
+        //ParkingDBManage parkingDb = new ParkingDBManage();
+        //parkingDb.static_init();
+        ParkingDBAdapter db = new ParkingDBAdapter(appContext);
+        db.open();
+        db.insertLot(new ParkingLot(4, "Magnolia lawn", 1, 36.142773, -86.798635, "", 20, 5));
+        db.close();
+        
 		Button buttonMember = (Button) findViewById(R.id.buttonMember);
 		buttonMember.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
