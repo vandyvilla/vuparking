@@ -1,3 +1,19 @@
+/*****************************************************************************
+ *   Copyright VUparking for CS279 project                                   *
+ *   Developed by Xiaowei Li, Yuan Zhuang                                    *
+ *   Licensed under the Apache License, Version 2.0 (the "License");         *
+ *   you may not use this file except in compliance with the License.        *
+ *   You may obtain a copy of the License at                                 *
+ *                                                                           *
+ *   http://www.apache.org/licenses/LICENSE-2.0                              *
+ *                                                                           *
+ *   Unless required by applicable law or agreed to in writing, software     *
+ *   distributed under the License is distributed on an "AS IS" BASIS,       *
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.*
+ *   See the License for the specific language governing permissions and     *
+ *   limitations under the License.                                          *
+ ****************************************************************************/
+
 package edu.vanderbilt.android.vuparking;
 
 import java.util.ArrayList;
@@ -17,6 +33,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import edu.vanderbilt.android.vuparking.MapOverlay;
 
 public class showMap extends MapActivity {
         
@@ -27,7 +45,7 @@ public class showMap extends MapActivity {
         ArrayList<GeoPoint> markers = new ArrayList<GeoPoint>();
         int userType = 0;
         
-        class MapOverlay extends com.google.android.maps.Overlay
+        class MarkerOverlay extends com.google.android.maps.Overlay
         {
                 public boolean draw (Canvas canvas, MapView mv, boolean shadow, long when)
                 {
@@ -75,9 +93,16 @@ public class showMap extends MapActivity {
                                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 mv.displayZoomControls(true);*/
                 //mapView.setStreetView(true);
+                
+                //List<Overlay> mapOverlays = mv.getOverlays();
+                //Drawable drawable = this.getResources().getDrawable(R.drawable.parking);
+                //MapOverlay itemizedoverlay = new MapOverlay(drawable);
+                
+                MapOverlay markerOverlay = new MapOverlay(this);
+                mv.getOverlays().add(markerOverlay);
+                
                 Bundle bundle = this.getIntent().getExtras();
                 userType = bundle.getInt("User", 0);
-                   
 		        loadMarker();
 		        showMarker();
 		        mv.invalidate();
@@ -112,7 +137,7 @@ public class showMap extends MapActivity {
         }
         
         private void showMarker(){
-	        	MapOverlay mapOverlay = new MapOverlay();
+	        	MarkerOverlay mapOverlay = new MarkerOverlay();
 		        List<Overlay> listOfOverlays = mv.getOverlays();
 		        listOfOverlays.clear();
 		        listOfOverlays.add(mapOverlay);
