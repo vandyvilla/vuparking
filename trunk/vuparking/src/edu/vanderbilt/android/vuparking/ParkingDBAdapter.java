@@ -107,7 +107,7 @@ public class ParkingDBAdapter {
     
     //---insert a title into the database---
     // -1 return to indicate failure.
-    public long insertLot(ParkingLot p) 
+    public long insertLot(ParkingLot p)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAME, p.getName());
@@ -117,7 +117,7 @@ public class ParkingDBAdapter {
         initialValues.put(KEY_AVAILABLE, p.getNumAvailabe());
         initialValues.put(KEY_DISABLE, p.getNumDisable());
         initialValues.put(KEY_COORDINATE_X, Double.toString(p.getLatitude()));
-        initialValues.put(KEY_COORDINATE_Y, Double.toString(p.getLongtitude()));  
+        initialValues.put(KEY_COORDINATE_Y, Double.toString(p.getLongtitude()));
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -133,7 +133,7 @@ public class ParkingDBAdapter {
     } 
 
     //---retrieves all the rows---
-    public Cursor getAllLots() 
+    public Cursor getAllLots()
     {
         return db.query(DATABASE_TABLE, new String[] {
         		KEY_ROWID, 
@@ -153,6 +153,26 @@ public class ParkingDBAdapter {
                 null);
     }
 
+    public Cursor getLotByZone(int zone){
+    	Cursor mCursor = 
+    		   db.query(false, DATABASE_TABLE, new String[] {
+                		KEY_ROWID,
+                		KEY_NAME,
+                		KEY_ADDRESS,
+                        KEY_COORDINATE_X,
+                        KEY_COORDINATE_Y,
+                        KEY_CAPACITY,
+                        KEY_ZONE,
+                        KEY_AVAILABLE,
+                        KEY_DISABLE,
+                		}, 
+                		KEY_ZONE + "=" + zone, null, null, null, null, null);  
+    	 if (mCursor != null) {
+             mCursor.moveToFirst();
+         }
+         return mCursor;
+    	
+    }
     //---retrieves a particular row---
     public Cursor getLot(long rowId) throws SQLException 
     {

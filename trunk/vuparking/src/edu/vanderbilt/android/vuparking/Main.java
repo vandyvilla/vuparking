@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Main extends Activity {
     /** Called when the activity is first created. */
@@ -51,13 +52,6 @@ public class Main extends Activity {
         }
         
         setContentView(R.layout.main);
-        
-        //ParkingDBManage parkingDb = new ParkingDBManage();
-        //parkingDb.static_init();
-        ParkingDBAdapter db = new ParkingDBAdapter(appContext);
-        db.open();
-        db.insertLot(new ParkingLot(4, "Magnolia lawn", 1, 36.142773, -86.798635, "", 20, 5));
-        db.close();
         
 		Button buttonMember = (Button) findViewById(R.id.buttonMember);
 		buttonMember.setOnClickListener(new OnClickListener(){
@@ -102,6 +96,8 @@ public class Main extends Activity {
 			
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
+				UserChoice = which + 1;
+				saveUser(UserChoice);
 			}
 		});
 		
@@ -110,8 +106,6 @@ public class Main extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				dialog.dismiss();
-				UserChoice = which;
-				saveUser(UserChoice);
 				toMapView();
 			}
 		});
