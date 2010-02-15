@@ -32,6 +32,11 @@ public class ParkingLot {
 	public void setZone(int type) { zone = type; }
 	public void setNumAvailable(int num) { num_available = num; }
 	
+	
+	ParkingLot() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	ParkingLot(int id, String name, int zone, double coordinate_x, double coordinate_y, 
 			           String address, int num_spot, int num_disable) {
 		setId(id);
@@ -41,6 +46,8 @@ public class ParkingLot {
 		setNumSpot(num_spot);
 		setNumDisable(num_disable);
 		setNumAvailable(num_spot);
+		setZone(zone);
 	}
+
 	
 }

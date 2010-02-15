@@ -58,7 +58,7 @@ public class showMap extends MapActivity {
 		                        mv.getProjection().toPixels(p, screenPts);
 		                        //mv.getProjection().toPixels(p2, screenPts2);
 		                        
-		                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.parking_purple);       
+		                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.parking);  
 		                        canvas.drawBitmap(bmp, screenPts.x, screenPts.y-20, null);
 		                    
 		                        //Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
@@ -109,6 +109,26 @@ public class showMap extends MapActivity {
         }
         
         private void loadMarker(){
+        	
+                ParkingDBManager parkingDb = new ParkingDBManager();
+                parkingDb.clearDb();
+                parkingDb.static_init();
+                ArrayList<ParkingLot> plots= parkingDb.queryParkingZone(userType);
+    			/*for (ListIterator<ParkingLot> it = plots.listIterator(); it.hasNext();)
+    			{
+    				double lat = (it.next()).getLatitude();
+    				double lng = (it.previous()).getLongtitude();
+    				GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+    				markers.add(p);
+    			}*/
+                for (int i=0; i < plots.size(); i++)
+                {
+                	double lat = plots.get(i).getLatitude();
+                	double lng = plots.get(i).getLongtitude();
+                	GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+    				markers.add(p);
+                }
+                
 		        String coordinates[] = {"36.14171","-86.803669"};
 		        double lat = Double.parseDouble(coordinates[0]);
 		        double lng = Double.parseDouble(coordinates[1]);
@@ -119,14 +139,14 @@ public class showMap extends MapActivity {
 		        
 		        p1 = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
 		        p2 = new GeoPoint((int)(lat1*1E6),(int)(lng1*1E6));
-		        if (userType == 0) 
+		        /*if (userType == 0) 
 		        {
 		        	markers.add(p1);
 		        }
 		        else
 		        {
 		        	markers.add(p2);
-		        }
+		        }*/
 		        setCenter(p1, zoomLevel);
         }
         
