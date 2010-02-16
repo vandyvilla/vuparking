@@ -1,13 +1,11 @@
 #summary How to install apk app on Android Emulator
 
-= Introduction =
-
-Add your content here.
-
-
 = Details =
 
 1. Start Android emulator (either go to android-sdk-windows/tools, click on emulator.exe and wait it to launch, or run emulator in Eclipse.)
+
 2. Run 'cmd' shell in Windows, go to tools directory;
+
 3. Type "adb install vuparking.apk";
+
 4. Wait it to be successfully installed. 
