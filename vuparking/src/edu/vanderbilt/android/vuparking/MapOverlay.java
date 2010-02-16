@@ -56,7 +56,7 @@ public class MapOverlay extends ItemizedOverlay<OverlayItem> {
         	double lng = plots.get(i).getLongtitude();
         	GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
         	OverlayItem overlay = new OverlayItem(p, plots.get(i).getName(), plots.get(i).getAddress());
-        	overlay.setMarker(boundCenterBottom(map.getResources().getDrawable(R.drawable.parking)));
+        	overlay.setMarker(boundCenterBottom(map.getResources().getDrawable(R.drawable.lot_marker)));
         	addOverlay(overlay);
         }
 		
@@ -88,7 +88,7 @@ public class MapOverlay extends ItemizedOverlay<OverlayItem> {
 			            + Integer.toString(plots.get(index).getNumSpot()) + "\nAvailable: "
 			            + Integer.toString(plots.get(index).getNumAvailabe()) + "\nDisable:    "
 			            + Integer.toString(plots.get(index).getNumDisable()));
-      dialog.setIcon(R.drawable.garages);
+      dialog.setIcon(R.drawable.parking);
       
 	  dialog.setPositiveButton("Direction", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
