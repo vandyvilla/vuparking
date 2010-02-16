@@ -1,6 +1,6 @@
 package edu.vanderbilt.android.vuparking;
 
-
+// Definition of Parking Lot Structure.
 public class ParkingLot {
 	
 	private int zone;
@@ -31,7 +31,6 @@ public class ParkingLot {
 	public void setNumDisable(int num) { num_disable = num; }
 	public void setZone(int type) { zone = type; }
 	public void setNumAvailable(int num) { num_available = num; }
-	
 	
 	ParkingLot() {
 		// TODO Auto-generated constructor stub

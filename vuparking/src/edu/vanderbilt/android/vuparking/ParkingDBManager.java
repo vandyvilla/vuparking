@@ -22,14 +22,10 @@ package edu.vanderbilt.android.vuparking;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import com.google.android.maps.GeoPoint;
-
-import android.content.ContentValues;
 import android.database.Cursor;
-import android.util.Log;
+
 import edu.vanderbilt.android.vuparking.ParkingDBAdapter;
 import edu.vanderbilt.android.vuparking.ParkingLot;
-
 
 public class ParkingDBManager
 {
@@ -78,7 +74,6 @@ public class ParkingDBManager
 				if (id == -1) break;
 			}
 			adapter.close();
-
 	}
 	
 	// Query the database for parking lot data of specific zone.
@@ -104,25 +99,18 @@ public class ParkingDBManager
 		adapter.close();
 		return lots;
 	}
+	
+	// Contact remote server to get latest available information.
 	public void sync_server(){
 		
 		
 	}
 	
+	// Delete all parkinglots information in DB.
 	public void clearDb() {
 		initialize();
 		adapter.deleteAllLots();
 		adapter.close();
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }
 
