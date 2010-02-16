@@ -47,7 +47,7 @@ public class ParkingDBAdapter {
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =
-        "create table parkinglots (_id integer primary key autoincrement, "
+        "create table parkinglots (_id integer primary key, "
         + "name text not null, address text, " 
         + "zone integer not null, capacity integer not null, "
         + "available integer not null, disable integer not null, "
@@ -87,7 +87,7 @@ public class ParkingDBAdapter {
             Log.w(TAG, "Upgrading database from version " + oldVersion 
                     + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS titles");
+            db.execSQL("DROP TABLE IF EXISTS parkinglots");
             onCreate(db);
         }
     }    
