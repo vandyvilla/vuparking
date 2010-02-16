@@ -1,0 +1,14 @@
+#summary How to obtain Google API Key
+
+You need to obtain a Google map API key before you can view Google map on the Android emulator.
+
+1. Locate _debug.keystore_ file in the default Android folder.
+
+2. Find _Keytool.exe_ under "C:\Program Files\Java\<JDK version>\bin" folder.
+
+3. Open the command window, navigate to "C:\Program Files\Java\<JDK version>\bin" and enter:
+
+keytool.exe -list -alias androiddebugkey -keystore "<_debug.keystore_ path>" -storepass android -keypass android
+
+4. You will see your Certificate fingerprint (MD5). Go to http://code.google.com/android/maps-api-signup.html and generate your API key.
+
