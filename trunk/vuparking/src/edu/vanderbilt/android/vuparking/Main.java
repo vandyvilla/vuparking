@@ -34,6 +34,7 @@ public class Main extends Activity {
     /** Called when the activity is first created. */
 	public static Context appContext;
 	int UserChoice = 0;    // Default: Visitor
+	int showZone = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {

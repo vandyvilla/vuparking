@@ -17,63 +17,96 @@
 package edu.vanderbilt.android.vuparking;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-
-import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MapController;
-import com.google.android.maps.Overlay;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
+
 import edu.vanderbilt.android.vuparking.MapOverlay;
 
 public class showMap extends MapActivity {
         
         MapView mv;
         MapController mc;
-        GeoPoint p1, p2;
-        int zoomLevel = 17;
-        ArrayList<GeoPoint> markers = new ArrayList<GeoPoint>();
+        GeoPoint p;
+        int zoomLevel = 15;
         int userType = 0;
         
-        class MarkerOverlay extends com.google.android.maps.Overlay
+        class ZoneOverlay extends com.google.android.maps.Overlay
         {
                 public boolean draw (Canvas canvas, MapView mv, boolean shadow, long when)
                 {
                         super.draw(canvas, mv, shadow);
-                        for (ListIterator<GeoPoint> it = markers.listIterator(); it.hasNext();)
-                        {
-		                        Point screenPts = new Point();
-		                        //Point screenPts2 = new Point();
-		                        GeoPoint p = it.next();
-		                        mv.getProjection().toPixels(p, screenPts);
-		                        //mv.getProjection().toPixels(p2, screenPts2);
-		                        
-		                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.parking);  
-		                        canvas.drawBitmap(bmp, screenPts.x, screenPts.y-20, null);
-		                    
-		                        //Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
-		                        //canvas.drawBitmap(bmp2, screenPts2.x, screenPts2.y-20, null);
-                        }
-                        /*Point screenPts1 = new Point();
-                        Point screenPts2 = new Point();
-                        mv.getProjection().toPixels(p1, screenPts1);
-                        mv.getProjection().toPixels(p2, screenPts2);
+                        // Set up Paint style.
+                        Paint paint1 = new Paint();
+                        paint1.setColor(Color.YELLOW);
+                        paint1.setAlpha(75);
+                        paint1.setStyle(Paint.Style.FILL);
                         
-                        Bitmap bmp1 = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
-                        canvas.drawBitmap(bmp1, screenPts1.x, screenPts1.y-20, null);
-                    
-                        Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.parking);        
-                        canvas.drawBitmap(bmp2, screenPts2.x, screenPts2.y-20, null);*/
+                        Paint paint2 = new Paint();
+                        paint2.setColor(Color.CYAN);
+                        paint2.setAlpha(75);
+                        paint2.setStyle(Paint.Style.FILL);
+                        
+                        Paint paint3 = new Paint();
+                        paint3.setColor(Color.GREEN);
+                        paint3.setAlpha(75);
+                        paint3.setStyle(Paint.Style.FILL);  
+                        
+                        Point pt = new Point();
+                        // Add polygon overlay at specific zone. 
+                        switch(userType){
+                        case 1: // Zone 1
+                        	 Path path1 = new Path();
+                             mv.getProjection().toPixels(new GeoPoint(36143777,-86799595), pt);
+                             path1.moveTo(pt.x, pt.y);
+                             mv.getProjection().toPixels(new GeoPoint(36138440,-86800282), pt);
+                             path1.lineTo(pt.x, pt.y);
+                             mv.getProjection().toPixels(new GeoPoint(36138036,-86794420), pt);
+                             path1.lineTo(pt.x, pt.y);
+                             mv.getProjection().toPixels(new GeoPoint(36143188,-86793716), pt);
+                             path1.lineTo(pt.x, pt.y);
+                             canvas.drawPath(path1, paint1);
+                             break;
+                        case 2: // Zone 2
+                        	 Path path2 = new Path();
+                        	 mv.getProjection().toPixels(new GeoPoint(36148519,-86804420), pt);
+                        	 path2.moveTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36145383,-86802253), pt);
+                        	 path2.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36145470,-86799785), pt);
+                        	 path2.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36148017,-86799549), pt);
+                        	 path2.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36150235,-86801287), pt);
+                        	 path2.lineTo(pt.x, pt.y);
+                        	 canvas.drawPath(path2, paint2);
+                        	 break;
+                        case 3: // Zone 3
+                        	 Path path3 = new Path();
+                        	 mv.getProjection().toPixels(new GeoPoint(36138850,-86810750), pt);
+                        	 path3.moveTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36138261,-86805257), pt);
+                        	 path3.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36143182,-86804634), pt);
+                        	 path3.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36143772,-86802639), pt);
+                        	 path3.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36147653,-86806265), pt);
+                        	 path3.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36146215,-86809591), pt);
+                        	 path3.lineTo(pt.x, pt.y);
+                        	 canvas.drawPath(path3, paint3);
+                        	 break;
+                        }
                         return true;
                 }
         }
@@ -86,41 +119,33 @@ public class showMap extends MapActivity {
                 
                 mv = (MapView) findViewById(R.id.map);
                 mv.setBuiltInZoomControls(true);
-                /*LinearLayout zoomLayout = (LinearLayout)findViewById(R.id.zoom);
-                View zoomView = mv.getZoomControls();
-
-                zoomLayout.addView(zoomView, new LinearLayout.LayoutParams(
-                                   LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                mv.displayZoomControls(true);*/
-                //mapView.setStreetView(true);
-                
-                //List<Overlay> mapOverlays = mv.getOverlays();
-                //Drawable drawable = this.getResources().getDrawable(R.drawable.parking);
-                //MapOverlay itemizedoverlay = new MapOverlay(drawable);
-                
-                MapOverlay markerOverlay = new MapOverlay(this);
-                mv.getOverlays().add(markerOverlay);
                 
                 Bundle bundle = this.getIntent().getExtras();
                 userType = bundle.getInt("User", 0);
-		        loadMarker();
-		        showMarker();
+                
+                // Centered at Vanderbilt
+		        p = new GeoPoint((int)(36141710),(int)(-86803669));
+		        setCenter(p, zoomLevel);
+                // loadMarker();
+		        
+		        // Show zone overlay with different color.
+		        showZone();
+		        
+		        // Add marker overlay on top of map view.
+                MapOverlay markerOverlay = new MapOverlay(this, this);
+                mv.getOverlays().add(markerOverlay);
+
+                //mapView.setStreetView(true);		        
 		        mv.invalidate();
         }
         
         private void loadMarker(){
-        	
+        	    GeoPoint p1, p2;
+        	    ArrayList<GeoPoint> markers = new ArrayList<GeoPoint>();
                 ParkingDBManager parkingDb = new ParkingDBManager();
-                parkingDb.clearDb();
-                parkingDb.static_init();
+                //parkingDb.clearDb();
+                //parkingDb.static_init();
                 ArrayList<ParkingLot> plots= parkingDb.queryParkingZone(userType);
-    			/*for (ListIterator<ParkingLot> it = plots.listIterator(); it.hasNext();)
-    			{
-    				double lat = (it.next()).getLatitude();
-    				double lng = (it.previous()).getLongtitude();
-    				GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
-    				markers.add(p);
-    			}*/
                 for (int i=0; i < plots.size(); i++)
                 {
                 	double lat = plots.get(i).getLatitude();
@@ -139,14 +164,7 @@ public class showMap extends MapActivity {
 		        
 		        p1 = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
 		        p2 = new GeoPoint((int)(lat1*1E6),(int)(lng1*1E6));
-		        /*if (userType == 0) 
-		        {
-		        	markers.add(p1);
-		        }
-		        else
-		        {
-		        	markers.add(p2);
-		        }*/
+		        zoomLevel = 15;
 		        setCenter(p1, zoomLevel);
         }
         
@@ -156,13 +174,10 @@ public class showMap extends MapActivity {
     	        mc.setZoom(zoom);
         }
         
-        private void showMarker(){
-	        	MarkerOverlay mapOverlay = new MarkerOverlay();
-		        List<Overlay> listOfOverlays = mv.getOverlays();
-		        listOfOverlays.clear();
-		        listOfOverlays.add(mapOverlay);
+        private void showZone(){
+	        	ZoneOverlay zOverlay = new ZoneOverlay();
+		        mv.getOverlays().add(zOverlay);
         }
-        
         
         @Override
         protected boolean isRouteDisplayed()
