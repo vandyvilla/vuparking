@@ -24,6 +24,12 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MapController;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -60,6 +66,11 @@ public class showMap extends MapActivity {
                         paint3.setColor(Color.GREEN);
                         paint3.setAlpha(75);
                         paint3.setStyle(Paint.Style.FILL);  
+                        
+                        Paint paint5 = new Paint();
+                        paint5.setColor(Color.GRAY);
+                        paint5.setAlpha(75);
+                        paint5.setStyle(Paint.Style.STROKE);
                         
                         Point pt = new Point();
                         // Add polygon overlay at specific zone. 
@@ -105,6 +116,22 @@ public class showMap extends MapActivity {
                         	 mv.getProjection().toPixels(new GeoPoint(36146215,-86809591), pt);
                         	 path3.lineTo(pt.x, pt.y);
                         	 canvas.drawPath(path3, paint3);
+                        	 break;
+                        case 4: // Zone 4
+                        	 break;
+                        case 5: // Medical
+                        	 Path path5 = new Path();
+                        	 mv.getProjection().toPixels(new GeoPoint(36138261,-86805257), pt);
+                        	 path5.moveTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36143182,-86804634), pt);
+                        	 path5.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36143772,-86802639), pt);
+                        	 path5.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36145470,-86799785), pt);
+                        	 path5.lineTo(pt.x, pt.y);
+                        	 mv.getProjection().toPixels(new GeoPoint(36137967,-86800987), pt);
+                        	 path5.lineTo(pt.x, pt.y);
+                        	 canvas.drawPath(path5, paint5);
                         	 break;
                         }
                         return true;
@@ -168,6 +195,59 @@ public class showMap extends MapActivity {
 		        setCenter(p1, zoomLevel);
         }
         
+        public boolean onCreateOptionsMenu (Menu menu){
+        	    super.onCreateOptionsMenu(menu);
+        	    menu.add(Menu.NONE, 0, Menu.NONE, "Select Zone");
+        	    menu.add(Menu.NONE, 1, Menu.NONE, "");
+			    return true;
+        }
+        
+        public boolean onOptionsItemSelected (MenuItem item){
+        	super.onOptionsItemSelected(item);
+            switch (item.getItemId()) {
+            case 0: 
+            	showDialog(0);
+            case 1:
+            	break;
+            }
+        	return true;
+        }
+        
+    	protected Dialog onCreateDialog(int id){
+    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    		CharSequence[] zones = {"zone1", "zone2", "zone3", "zone4", "Medical"};
+    		boolean[] ZoneChoice = {false, false, false, false, false};
+    		builder.setTitle("Select zone");
+    		builder.setMultiChoiceItems(zones, ZoneChoice, new DialogInterface.OnMultiChoiceClickListener() {
+				
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					// TODO Auto-generated method stub
+					
+				}
+    		});
+    		
+    		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int which) {
+    				// TODO Auto-generated method stub
+    				dialog.dismiss();
+    				refreshOverlay();
+    			}
+    		});
+    		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {    			
+    			public void onClick(DialogInterface dialog, int which) {
+    				// TODO Auto-generated method stub
+    				dialog.dismiss();
+    			}
+    		});
+    		return builder.create();
+    	}
+        
+    	// Load multiple zones chosen by user.
+    	private void refreshOverlay(){
+			mv.getOverlays().clear();
+			
+    		
+    	}
         private void setCenter(GeoPoint p, int zoom){
         	    mc = mv.getController();
     	        mc.animateTo(p);
