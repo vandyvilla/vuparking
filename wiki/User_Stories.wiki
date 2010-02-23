@@ -14,8 +14,8 @@
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
 
 3rd Bi-weekly build cycle user stories:
-  * User can refresh the number of available parking lots manually. (xiaowei)
-  * User can modify zone choices and see multiple parking zones (with markers) on map. (Yuan) 
+  * User can select multiple zones and see them highlighted on map.(by either choosing on start-up memu or clicking "Menu" button during map view) （Yuan）
+  * Users can see start-up menu with their previous zone choice checked. (Yuan)
 
 2nd Bi-weekly build cycle user stories:
   * User can see detailed parking information when click on the marker on map (rates, address, garage capacity); (Xiaowei)
