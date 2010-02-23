@@ -18,7 +18,7 @@
   * Users can see start-up menu with their previous zone choice checked. (Yuan)
 
 2nd Bi-weekly build cycle user stories:
-  * User can see detailed parking information when click on the marker on map (rates, address, garage capacity); (Xiaowei)
+  * User can see detailed parking information when click on the marker on map (address, garage capacity); (Xiaowei)
   * User can see parking zones overlaid with different colors. (Yuan)
   * Underneath: set up, debug, operate Android built-in Sqlite Database and store some static parking lot cache information. 
 
