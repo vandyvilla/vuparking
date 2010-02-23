@@ -2,7 +2,6 @@
 
   * Users can save personal information such as user type and parking zone. 
   * Users can view a map with parking lots and zones marked. 
-  * Users can view parking rates and parking policy.
   * Users can choose to display disabled parking lots or not. 
   * Users can zoom in and zoom out the map. 
   * Users can search a destination and view available parking lots around there. 
@@ -13,6 +12,10 @@
   * Users can store their preferred parking lots as default setting and view them when the application starts up. 
   * Users can rate and comment for a parking lot or a garage. 
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
+
+3rd Bi-weekly build cycle user stories:
+  * User can refresh the number of available parking lots manually. (xiaowei)
+  * User can modify zone choices and see multiple parking zones (with markers) on map. (Yuan) 
 
 2nd Bi-weekly build cycle user stories:
   * User can see detailed parking information when click on the marker on map (rates, address, garage capacity); (Xiaowei)
