@@ -14,6 +14,8 @@
  *   limitations under the License.                                          *
  ****************************************************************************/
 
+// This file is written for Main activity, which is called when the application is launched. 
+
 package edu.vanderbilt.android.vuparking;
 
 import android.app.Activity;
@@ -28,95 +30,80 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class Main extends Activity {
-    /** Called when the activity is first created. */
-	public static Context appContext;
-	int UserChoice = 0;    // Default: Visitor
-	int showZone = 0;
 	
+    public static Context appContext;
+
+    // Record zone chosen by user, the zones are: Zone1, Zone2, Zone3, Zone4, Medical, Visitor.
+    private static boolean[] zoneChoice = {false, false, false, false, false, false};
+    private int num_zone = 5;
+	
+	// Entry point for the application.
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
+    	
+    	// Get the application context to pass to other activity.
         if (appContext == null)
             appContext = getApplicationContext();
-        if ((new File("data/data/edu.vanderbilt.android.vuparking/user.txt")).exists()) {
-        	try {
-        		BufferedReader in = new BufferedReader(new FileReader("data/data/edu.vanderbilt.android.vuparking/user.txt"));
-        	    UserChoice = Integer.parseInt(in.readLine());
-        	    in.close();
-        	    toMapView();
-        	}catch (Exception e){
-        		System.err.println("Error: " + e.getMessage());
-            }
-        }
         
         setContentView(R.layout.main);
         
-		Button buttonMember = (Button) findViewById(R.id.buttonMember);
+        Button buttonMember = (Button) findViewById(R.id.buttonMember);
 		buttonMember.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
-				showDialog(0);
+				showDialog(0);         // pop up dialog for choosing zones.
 			}
 		});
 
 		Button buttonVisitor = (Button) findViewById(R.id.buttonVisitor);
 		buttonVisitor.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
-				UserChoice = 0;
-				saveUser(UserChoice);
+				zoneChoice[5] = true;
 				toMapView();
 			}
 		});
     }
     
+    // Go to Google Map view by starting a new activity
     private void toMapView(){
-    	Intent toMap = new Intent(this, showMap.class);
+    	Intent toMap = new Intent(this, ParkingMap.class);
     	Bundle bundle = new Bundle();
-    	bundle.putInt("User", UserChoice);
+        bundle.putBooleanArray("ZoneChoice", zoneChoice);
     	toMap.putExtras(bundle);
     	startActivity(toMap);
     }
     
-    private void saveUser(int user){
-    	try {
-    		BufferedWriter out = new BufferedWriter(new FileWriter("data/data/edu.vanderbilt.android.vuparking/user.txt"));
-    		out.write(Integer.toString(UserChoice));   // Default overwrite the file.
-    		out.close();
-    	}catch (Exception e){//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
-        }
-    }
-    
+    // Create 'Zone Selection' dialog
 	protected Dialog onCreateDialog(int id){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		CharSequence[] zones = {"zone1", "zone2", "zone3", "zone4", "Medical"};
-		builder.setTitle("Please pick a zone");
-		builder.setSingleChoiceItems(zones, -1, new DialogInterface.OnClickListener() {
-			
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				UserChoice = which + 1;
-				saveUser(UserChoice);
+		CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical"};
+		builder.setTitle("Please select zone");
+		builder.setMultiChoiceItems(zones, zoneChoice, new DialogInterface.OnMultiChoiceClickListener() {			
+			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				zoneChoice[which] = isChecked;
 			}
 		});
 		
-		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
-			
+		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {			
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				dialog.dismiss();
 				toMapView();
 			}
 		});
-		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-			
+		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {			
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				dialog.dismiss();
 			}
 		});
 		return builder.create();
+	}
+	
+	// Set the item checked which are chosen last time.
+	protected void onPrepareDialog(Dialog dialog){
+		for (int i = 0; i < num_zone; i++){
+			((AlertDialog) dialog).getListView().setItemChecked(i, zoneChoice[i]);
+		}
 	}
 }
