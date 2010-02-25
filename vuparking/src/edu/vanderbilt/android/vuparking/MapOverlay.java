@@ -38,6 +38,7 @@ public class MapOverlay extends ItemizedOverlay<OverlayItem> {
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private ParkingDBManager parkingDb = new ParkingDBManager();
 	private ArrayList<ParkingLot> plots;
+	private static final int TOTAL_ZONE=6;
 	
 	private Context mContext;
 	private MapView mv;
@@ -49,16 +50,20 @@ public class MapOverlay extends ItemizedOverlay<OverlayItem> {
 		mv = (MapView) map.findViewById(R.id.map);
 		
 		// Get corresponding parking information from DB.
-		plots = parkingDb.queryParkingZone(map.userType);
-        for (int i=0; i < plots.size(); i++)
-        {
-        	double lat = plots.get(i).getLatitude();
-        	double lng = plots.get(i).getLongtitude();
-        	GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
-        	OverlayItem overlay = new OverlayItem(p, plots.get(i).getName(), plots.get(i).getAddress());
-        	overlay.setMarker(boundCenterBottom(map.getResources().getDrawable(R.drawable.lot_marker)));
-        	addOverlay(overlay);
-        }
+		for (int j=0; j<TOTAL_ZONE && map.userChoices[j]!=-1; j++)
+		{
+			plots = parkingDb.queryParkingZone(map.userChoices[j]);
+	        for (int i=0; i < plots.size(); i++)
+	        {
+	        	double lat = plots.get(i).getLatitude();
+	        	double lng = plots.get(i).getLongtitude();
+	        	GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+	        	OverlayItem overlay = new OverlayItem(p, plots.get(i).getName(), plots.get(i).getAddress());
+	        	overlay.setMarker(boundCenterBottom(map.getResources().getDrawable(R.drawable.lot_marker)));
+	        	addOverlay(overlay);
+	        }
+		}
+		
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -77,9 +82,6 @@ public class MapOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 	  OverlayItem item = mOverlays.get(index);
-	  
-	  //Dialog dialog = new Dialog();
-	  //dialog.setContentView(R.layout.parkinglot);
 	  
 	  // Display detailed parking lot information.	 
 	  AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);

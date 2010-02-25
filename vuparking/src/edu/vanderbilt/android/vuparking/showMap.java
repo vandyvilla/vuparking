@@ -29,7 +29,6 @@ import android.view.MenuItem;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -44,7 +43,8 @@ public class showMap extends MapActivity {
         MapController mc;
         GeoPoint p;
         int zoomLevel = 15;
-        int userType = 0;
+        private static final int TOTAL_ZONE=6;
+    	int[] userChoices=new int[TOTAL_ZONE];
         
         class ZoneOverlay extends com.google.android.maps.Overlay
         {
@@ -74,66 +74,70 @@ public class showMap extends MapActivity {
                         
                         Point pt = new Point();
                         // Add polygon overlay at specific zone. 
-                        switch(userType){
-                        case 1: // Zone 1
-                        	 Path path1 = new Path();
-                             mv.getProjection().toPixels(new GeoPoint(36143777,-86799595), pt);
-                             path1.moveTo(pt.x, pt.y);
-                             mv.getProjection().toPixels(new GeoPoint(36138440,-86800282), pt);
-                             path1.lineTo(pt.x, pt.y);
-                             mv.getProjection().toPixels(new GeoPoint(36138036,-86794420), pt);
-                             path1.lineTo(pt.x, pt.y);
-                             mv.getProjection().toPixels(new GeoPoint(36143188,-86793716), pt);
-                             path1.lineTo(pt.x, pt.y);
-                             canvas.drawPath(path1, paint1);
-                             break;
-                        case 2: // Zone 2
-                        	 Path path2 = new Path();
-                        	 mv.getProjection().toPixels(new GeoPoint(36148519,-86804420), pt);
-                        	 path2.moveTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36145383,-86802253), pt);
-                        	 path2.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36145470,-86799785), pt);
-                        	 path2.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36148017,-86799549), pt);
-                        	 path2.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36150235,-86801287), pt);
-                        	 path2.lineTo(pt.x, pt.y);
-                        	 canvas.drawPath(path2, paint2);
-                        	 break;
-                        case 3: // Zone 3
-                        	 Path path3 = new Path();
-                        	 mv.getProjection().toPixels(new GeoPoint(36138850,-86810750), pt);
-                        	 path3.moveTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36138261,-86805257), pt);
-                        	 path3.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36143182,-86804634), pt);
-                        	 path3.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36143772,-86802639), pt);
-                        	 path3.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36147653,-86806265), pt);
-                        	 path3.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36146215,-86809591), pt);
-                        	 path3.lineTo(pt.x, pt.y);
-                        	 canvas.drawPath(path3, paint3);
-                        	 break;
-                        case 4: // Zone 4
-                        	 break;
-                        case 5: // Medical
-                        	 Path path5 = new Path();
-                        	 mv.getProjection().toPixels(new GeoPoint(36138261,-86805257), pt);
-                        	 path5.moveTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36143182,-86804634), pt);
-                        	 path5.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36143772,-86802639), pt);
-                        	 path5.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36145470,-86799785), pt);
-                        	 path5.lineTo(pt.x, pt.y);
-                        	 mv.getProjection().toPixels(new GeoPoint(36137967,-86800987), pt);
-                        	 path5.lineTo(pt.x, pt.y);
-                        	 canvas.drawPath(path5, paint5);
-                        	 break;
+                        for (int i=0; i<TOTAL_ZONE && userChoices[i]!=-1; i++)
+                        {
+                        	switch(userChoices[i]){
+                            case 0: // Zone 1
+                            	 Path path1 = new Path();
+                                 mv.getProjection().toPixels(new GeoPoint(36143777,-86799595), pt);
+                                 path1.moveTo(pt.x, pt.y);
+                                 mv.getProjection().toPixels(new GeoPoint(36138440,-86800282), pt);
+                                 path1.lineTo(pt.x, pt.y);
+                                 mv.getProjection().toPixels(new GeoPoint(36138036,-86794420), pt);
+                                 path1.lineTo(pt.x, pt.y);
+                                 mv.getProjection().toPixels(new GeoPoint(36143188,-86793716), pt);
+                                 path1.lineTo(pt.x, pt.y);
+                                 canvas.drawPath(path1, paint1);
+                                 break;
+                            case 1: // Zone 2
+                            	 Path path2 = new Path();
+                            	 mv.getProjection().toPixels(new GeoPoint(36148519,-86804420), pt);
+                            	 path2.moveTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36145383,-86802253), pt);
+                            	 path2.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36145470,-86799785), pt);
+                            	 path2.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36148017,-86799549), pt);
+                            	 path2.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36150235,-86801287), pt);
+                            	 path2.lineTo(pt.x, pt.y);
+                            	 canvas.drawPath(path2, paint2);
+                            	 break;
+                            case 2: // Zone 3
+                            	 Path path3 = new Path();
+                            	 mv.getProjection().toPixels(new GeoPoint(36138850,-86810750), pt);
+                            	 path3.moveTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36138261,-86805257), pt);
+                            	 path3.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36143182,-86804634), pt);
+                            	 path3.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36143772,-86802639), pt);
+                            	 path3.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36147653,-86806265), pt);
+                            	 path3.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36146215,-86809591), pt);
+                            	 path3.lineTo(pt.x, pt.y);
+                            	 canvas.drawPath(path3, paint3);
+                            	 break;
+                            case 3: // Zone 4
+                            	 break;
+                            case 4: // Medical
+                            	 Path path5 = new Path();
+                            	 mv.getProjection().toPixels(new GeoPoint(36138261,-86805257), pt);
+                            	 path5.moveTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36143182,-86804634), pt);
+                            	 path5.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36143772,-86802639), pt);
+                            	 path5.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36145470,-86799785), pt);
+                            	 path5.lineTo(pt.x, pt.y);
+                            	 mv.getProjection().toPixels(new GeoPoint(36137967,-86800987), pt);
+                            	 path5.lineTo(pt.x, pt.y);
+                            	 canvas.drawPath(path5, paint5);
+                            	 break;
+                            }
                         }
+                        
                         return true;
                 }
         }
@@ -148,12 +152,12 @@ public class showMap extends MapActivity {
                 mv.setBuiltInZoomControls(true);
                 
                 Bundle bundle = this.getIntent().getExtras();
-                userType = bundle.getInt("User", 0);
+                userChoices = bundle.getIntArray("User");
                 
                 // Centered at Vanderbilt
 		        p = new GeoPoint((int)(36141710),(int)(-86803669));
 		        setCenter(p, zoomLevel);
-                // loadMarker();
+                loadMarker();
 		        
 		        // Show zone overlay with different color.
 		        showZone();
@@ -172,14 +176,18 @@ public class showMap extends MapActivity {
                 ParkingDBManager parkingDb = new ParkingDBManager();
                 //parkingDb.clearDb();
                 //parkingDb.static_init();
-                ArrayList<ParkingLot> plots= parkingDb.queryParkingZone(userType);
-                for (int i=0; i < plots.size(); i++)
+                for (int i=0; i<TOTAL_ZONE && userChoices[i]!=-1; i++)
                 {
-                	double lat = plots.get(i).getLatitude();
-                	double lng = plots.get(i).getLongtitude();
-                	GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
-    				markers.add(p);
+                	ArrayList<ParkingLot> plots= parkingDb.queryParkingZone(userChoices[i]);
+                    for (int j=0; j < plots.size(); j++)
+                    {
+                    	double lat = plots.get(j).getLatitude();
+                    	double lng = plots.get(j).getLongtitude();
+                    	GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+        				markers.add(p);
+                    }
                 }
+                
                 
 		        String coordinates[] = {"36.14171","-86.803669"};
 		        double lat = Double.parseDouble(coordinates[0]);
@@ -197,7 +205,7 @@ public class showMap extends MapActivity {
         
         public boolean onCreateOptionsMenu (Menu menu){
         	    super.onCreateOptionsMenu(menu);
-        	    menu.add(Menu.NONE, 0, Menu.NONE, "Select Zone");
+        	    menu.add(Menu.NONE, 0, Menu.NONE, "Pick Zones");
         	    menu.add(Menu.NONE, 1, Menu.NONE, "");
 			    return true;
         }
@@ -216,19 +224,34 @@ public class showMap extends MapActivity {
     	protected Dialog onCreateDialog(int id){
     		AlertDialog.Builder builder = new AlertDialog.Builder(this);
     		CharSequence[] zones = {"zone1", "zone2", "zone3", "zone4", "Medical"};
-    		boolean[] ZoneChoice = {false, false, false, false, false};
-    		builder.setTitle("Select zone");
-    		builder.setMultiChoiceItems(zones, ZoneChoice, new DialogInterface.OnMultiChoiceClickListener() {
+    		builder.setTitle("Please Pick Your zones");
+    		final boolean[] checkedItems=new boolean[5];
+    		for (int i=0; i<TOTAL_ZONE-1; i++)
+    		{
+    			if (userChoices[i]!=-1)
+    				checkedItems[i]=true;	
+    		}
+    		builder.setMultiChoiceItems(zones, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					// TODO Auto-generated method stub
+					checkedItems[which]=isChecked;
 					
 				}
     		});
     		
     		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int which) {
-    				// TODO Auto-generated method stub
+    				for (int i=0; i<5; i++)
+    				{
+    					if (checkedItems[i])
+    						userChoices[i]=i;
+    					else
+    						userChoices[i]=-1;	
+    				}
+    				userChoices[TOTAL_ZONE-1]=-1;
+    				
+    				//reload the map
+			               
     				dialog.dismiss();
     				refreshOverlay();
     			}
