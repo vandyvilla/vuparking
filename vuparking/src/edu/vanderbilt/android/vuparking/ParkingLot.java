@@ -13,55 +13,66 @@
  *   See the License for the specific language governing permissions and     *
  *   limitations under the License.                                          *
  ****************************************************************************/
+
+// This file defines parking lot/garage structure.
+
 package edu.vanderbilt.android.vuparking;
 
-// Definition of Parking Lot Structure.
 public class ParkingLot {
-	
-	private int zone;
-	private int id;
+    
+	// Future extension for garage.
+	/*class garage {
+		private int num_layer;              // Number of layers of the garage.
+		//private int[] layers;               // Number of available spots for each layer.
+		public void setLayer(int l) { num_layer = l; }
+		public int getLayer() { return num_layer; }
+	}*/
+	private int type;                      // Indication of garage or parking lot.
+	private int zone;                      // Multiple zone belonging excluded.
+	private int id;                        // Unique identifier.
 	private String name;
-	//private double coordinates[];
-	private double coordinate_x, coordinate_y;
 	private String address;
-	private int num_spot;
-	private int num_disable;
-	private int num_available;
+	private double coordinate_x, coordinate_y; // Location information.
+	private int num_spot;                   // Capacity in total.
+	private int num_disable;                // Number of available spots specially for disability.
+	private int num_available;              // Number of available spots excluding those for disability.
+	private int rate;                       // For visitor zone.
 	
 	public int getId() { return id; }
-	public String getName() { return name; }
+    public int getType() { return type; }
 	public int getZone() { return zone; }
+	public String getName() { return name; }
+	public String getAddress() { return address; }
 	public double getLatitude() { return coordinate_x; }
 	public double getLongtitude() { return coordinate_y; }
-	public String getAddress() { return address; }
 	public int getNumSpot() { return num_spot; }
 	public int getNumDisable() { return num_disable; }
 	public int getNumAvailabe() { return num_available; }
+	public int getRate() { return rate; }
 	
 	public void setId(int ID) { id = ID; }
+    public void setType(int Type) { type = Type; }
+	public void setZone(int Zone) { zone = Zone; }
 	public void setName(String Name) { name = Name; }
-	public void setCoordinates(double x, double y) { coordinate_x = x;  coordinate_y = y; }
 	public void setAddress(String addr) { address = addr; }
+	public void setCoordinates(double x, double y) { coordinate_x = x;  coordinate_y = y; }
 	public void setNumSpot(int num) { num_spot = num; }
 	public void setNumDisable(int num) { num_disable = num; }
-	public void setZone(int type) { zone = type; }
 	public void setNumAvailable(int num) { num_available = num; }
+	public void setRate(int Rate) { rate = Rate; }
 	
-	ParkingLot() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public ParkingLot(int id, String name, int zone, double coordinate_x, double coordinate_y, 
-			           String address, int num_spot, int num_disable) {
+	public ParkingLot(int id, int type, int zone, String name, String address, double coordinate_x, double coordinate_y, 
+			          int num_spot, int num_disable, int num_available, int rate) {
 		setId(id);
+		setType(type);
+		setZone(zone);
 		setName(name);
-		setCoordinates(coordinate_x, coordinate_y);
 		setAddress(address);
+		setCoordinates(coordinate_x, coordinate_y);
 		setNumSpot(num_spot);
 		setNumDisable(num_disable);
-		setNumAvailable(num_spot);
-		setZone(zone);
+		setNumAvailable(num_available);
+		setRate(rate);
 	}
-
 	
 }
