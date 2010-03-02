@@ -35,7 +35,7 @@ class ZoneOverlay extends com.google.android.maps.Overlay {
 	ArrayList<ArrayList<coordinate>> ZonePt = new ArrayList<ArrayList<coordinate>>();
 	ParkingMap map;
 	
-    // Define struct for coordinate.
+    // Define structure for coordinate.
     class coordinate
     {
     	int x, y;
@@ -121,5 +121,4 @@ class ZoneOverlay extends com.google.android.maps.Overlay {
         }
         return true;
 	 }
-}	
-	 
+}
