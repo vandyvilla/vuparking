@@ -39,6 +39,7 @@ public class ParkingDBManager
 	public static final int MEDICAL = 4;
 	public static final int VISITOR = 5;
 
+
 	// Open or Create the database.
 	public boolean openDB()
 	{
