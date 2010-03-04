@@ -24,13 +24,5 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/buttonMember"
-            />
-            
-     <CheckBox android:id="@+id/chkDisable"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="For Disability"
-            android:layout_below="@+id/buttonVisitor"
-            android:layout_alignRight="@+id/buttonVisitor"
-            />     
+            />    
 </RelativeLayout>
