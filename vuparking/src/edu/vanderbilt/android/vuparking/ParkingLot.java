@@ -18,15 +18,8 @@
 
 package edu.vanderbilt.android.vuparking;
 
-public class ParkingLot {
-    
-	// Future extension for garage.
-	/*class garage {
-		private int num_layer;              // Number of layers of the garage.
-		//private int[] layers;               // Number of available spots for each layer.
-		public void setLayer(int l) { num_layer = l; }
-		public int getLayer() { return num_layer; }
-	}*/
+public class ParkingLot 
+{
 	private int type;                      // Indication of garage or parking lot.
 	private int zone;                      // Multiple zone belonging excluded.
 	private int id;                        // Unique identifier.
@@ -37,9 +30,9 @@ public class ParkingLot {
 	private int num_disable;                // Number of available spots specially for disability.
 	private int num_available;              // Number of available spots excluding those for disability.
 	private int rate;                       // For visitor zone.
-	
+
 	public int getId() { return id; }
-    public int getType() { return type; }
+	public int getType() { return type; }
 	public int getZone() { return zone; }
 	public String getName() { return name; }
 	public String getAddress() { return address; }
@@ -49,9 +42,9 @@ public class ParkingLot {
 	public int getNumDisable() { return num_disable; }
 	public int getNumAvailabe() { return num_available; }
 	public int getRate() { return rate; }
-	
+
 	public void setId(int ID) { id = ID; }
-    public void setType(int Type) { type = Type; }
+	public void setType(int Type) { type = Type; }
 	public void setZone(int Zone) { zone = Zone; }
 	public void setName(String Name) { name = Name; }
 	public void setAddress(String addr) { address = addr; }
@@ -60,9 +53,10 @@ public class ParkingLot {
 	public void setNumDisable(int num) { num_disable = num; }
 	public void setNumAvailable(int num) { num_available = num; }
 	public void setRate(int Rate) { rate = Rate; }
-	
+
 	public ParkingLot(int id, int type, int zone, String name, String address, double coordinate_x, double coordinate_y, 
-			          int num_spot, int num_disable, int num_available, int rate) {
+			int num_spot, int num_disable, int num_available, int rate) 
+	{
 		setId(id);
 		setType(type);
 		setZone(zone);
@@ -74,5 +68,5 @@ public class ParkingLot {
 		setNumAvailable(num_available);
 		setRate(rate);
 	}
-	
+
 }

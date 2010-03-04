@@ -29,100 +29,95 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class Main extends Activity {
+public class Main extends Activity 
+{
 	public static Context appContext;
-	
-	private static final int TOTAL_ZONE=6; //Zone1, Zone2, Zone3, Zone4, Medical Center, Visitor
-	//Record user's zone choices. 
-	private static boolean[] zoneChoices=new boolean[TOTAL_ZONE];
 
-	//Entry point of the application
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        //Get the application context to pass to other activities
-        if (appContext == null)
-            appContext = getApplicationContext();
+	private static final int TOTAL_ZONE=6; //Zone1, Zone2, Zone3, Zone4, Medical, Visitor.
+	private static boolean[] zoneChoices=new boolean[TOTAL_ZONE]; //Record user's zone choices
 
-        setContentView(R.layout.main);
-        
+	// Entry point for the application.
+	@Override
+	public void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+
+		// Get the application context to pass to other activity.
+		if (appContext == null)
+			appContext = getApplicationContext();
+
+		setContentView(R.layout.main);
+
 		Button buttonMember = (Button) findViewById(R.id.buttonMember);
-		buttonMember.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				showDialog(0); //pop up the dialog for choosing zones
+		buttonMember.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				showDialog(0);         // pop up dialog for choosing zones.
 			}
 		});
 
 		Button buttonVisitor = (Button) findViewById(R.id.buttonVisitor);
-		buttonVisitor.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				for (int i=0; i<TOTAL_ZONE-1; i++)
-					zoneChoices[i]=false;
-				zoneChoices[TOTAL_ZONE-1]=true;
+		buttonVisitor.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				for (int i=0; i < TOTAL_ZONE-1; i++)
+					zoneChoices[i] = false;
+				zoneChoices[TOTAL_ZONE-1] = true;
 				toMapView();
 			}
 		});
-    }
-    
-    //Go to Google Map view by starting a new activity
-    private void toMapView(){
-    	Intent toMap = new Intent(this, ParkingMap.class);
-    	Bundle bundle = new Bundle();
-    	bundle.putBooleanArray("ZoneChoices", zoneChoices);
-    	toMap.putExtras(bundle);
-    	startActivity(toMap);
-    }
-    
-    //Save user's zone choices
-    private void saveZoneChoices(boolean[] checkedItems){
-    	for (int i=0; i<TOTAL_ZONE-1; i++)
-    	{
-    		if (checkedItems[i])
-    			zoneChoices[i]=true;
-    		else
-    			zoneChoices[i]=false;
-    	}
-    	zoneChoices[TOTAL_ZONE-1]=false;
-    	
-    }
-    
-    //Create the dialog for selecting zones
-	protected Dialog onCreateDialog(int id){
+	}
+
+	// Go to Google Map view by starting a new activity
+	private void toMapView()
+	{
+		Intent toMap = new Intent(this, ParkingMap.class);
+		Bundle bundle = new Bundle();
+		bundle.putBooleanArray("zoneChoices", zoneChoices);
+		toMap.putExtras(bundle);
+		startActivity(toMap);
+	}
+
+	// Create 'Zone Selection' dialog
+	protected Dialog onCreateDialog(int id)
+	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical"};
 		builder.setTitle("Please pick your zones");
-		final boolean[] checkedItems=new boolean[TOTAL_ZONE-1];
-		builder.setMultiChoiceItems(zones, checkedItems, new DialogInterface.OnMultiChoiceClickListener() 
-		{
-			
-			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-				checkedItems[which]=isChecked;
-
+		builder.setMultiChoiceItems(zones, zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
+		{			
+			public void onClick(DialogInterface dialog, int which, boolean isChecked) 
+			{
+				zoneChoices[TOTAL_ZONE-1] = false;
+				zoneChoices[which] = isChecked;
 			}
 		});
-		
-		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
-			
-			public void onClick(DialogInterface dialog, int which) {
+
+		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
+		{			
+			public void onClick(DialogInterface dialog, int which)
+			{
 				dialog.dismiss();
-				saveZoneChoices(checkedItems);
 				toMapView();
 			}
 		});
-		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-			
-			public void onClick(DialogInterface dialog, int which) {
+
+		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog, int which) 
+			{
 				dialog.dismiss();
 			}
 		});
 		return builder.create();
 	}
-	
-	//Check the dialog items according to user's choices last time
-	protected void onPrepareDialog(Dialog dialog){
-		for (int i=0; i<TOTAL_ZONE-1; i++){
+
+	// Set the item checked which are chosen last time.
+	protected void onPrepareDialog(Dialog dialog)
+	{
+		for (int i = 0; i < TOTAL_ZONE-1; i++)
 			((AlertDialog) dialog).getListView().setItemChecked(i, zoneChoices[i]);
-		}
 	}
 }

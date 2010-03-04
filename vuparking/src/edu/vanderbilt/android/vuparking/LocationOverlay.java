@@ -28,46 +28,45 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-class LocationOverlay extends MyLocationOverlay {
-	
+class LocationOverlay extends MyLocationOverlay 
+{
 	private Context mContext;
-	
 	public GeoPoint p = new GeoPoint(36141987, -86805900);   // Default location at vanderbilt.
-	
 	public boolean signal = false;    // if received new GPS signal.
-	
+
 	public LocationOverlay (Context context, MapView mapView)
-    {
-	        super(context, mapView);
-	        mContext = context;
+	{
+		super(context, mapView);
+		mContext = context;
 	}
-	
-	public GeoPoint getCurLocation(){
-		    // Update current location.
-		    if ((p = getMyLocation()) != null) {
-		    	signal = true;
-		    }
-		    else {
-		    	p = new GeoPoint(36141987, -86805900);
-		    	signal = false;
-		    }
-		    return p;
+
+	public GeoPoint getCurLocation()
+	{
+		// Update current location.
+		if ((p = getMyLocation()) != null) 
+			signal = true;
+		else 
+		{
+			p = new GeoPoint(36141987, -86805900);
+			signal = false;
+		}
+		return p;
 	}
-	
+
 	// Draw current location marker.
-    @Override
+	@Override
 	public boolean draw (Canvas canvas, MapView mv, boolean shadow, long when)
-    {
-            super.draw(canvas, mv, shadow);
-            Point screenPts = new Point();
-            mv.getProjection().toPixels(getCurLocation(), screenPts);
-            Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.marker);
-            canvas.drawBitmap(bmp, screenPts.x-16, screenPts.y-32, null);
-            return true;
-    }
-    
-    public void onLocationChanged() {
-    	
-    	   return;
-    }
+	{
+		super.draw(canvas, mv, shadow);
+		Point screenPts = new Point();
+		mv.getProjection().toPixels(getCurLocation(), screenPts);
+		Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.marker);
+		canvas.drawBitmap(bmp, screenPts.x-16, screenPts.y-32, null);
+		return true;
+	}
+
+	public void onLocationChanged() 
+	{
+		return;
+	}
 }
