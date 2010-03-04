@@ -105,17 +105,4 @@ public class MultiZoneTest extends ActivityInstrumentationTestCase2<Main>
 			assert(p.getZone() == VISITOR);
 		}
 	}
-	
-	/*public void testMultiZone() {
-		ParkingDBManager parkingDb = new ParkingDBManager(Main.appContext);
-		assert(parkingDb.openDB() == true);
-		int[] num = {0,0,0,0,0,0};
-		num[ZONE1] = parkingDb.queryParkingZone(ZONE1).size();
-		num[ZONE2] = parkingDb.queryParkingZone(ZONE2).size();
-		num[ZONE3] = parkingDb.queryParkingZone(ZONE3).size();
-		num[ZONE4] = parkingDb.queryParkingZone(ZONE4).size();
-		num[MEDICAL] = parkingDb.queryParkingZone(MEDICAL).size();
-		num[VISITOR] = parkingDb.queryParkingZone(VISITOR).size();
-		assert(num[ZONE1]+num[ZONE2]+num[ZONE3]+num[ZONE4]+num[MEDICAL]+num[VISITOR] == 16);
-	}*/
 }
