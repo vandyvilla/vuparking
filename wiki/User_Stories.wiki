@@ -13,6 +13,12 @@
   * Users can rate and comment for a parking lot or a garage. 
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
 
+4th Bi-weekly build cycle user stories:
+  * User can refresh (update) the number of available parking spots of all parking lots from server. 
+  Sub Task:
+  * Client: manually send request to server, check response, update database; (Yuan)
+  * Server: web interface for manually modify available number, display data kept persistent at server side. (Xiaowei)
+
 3rd Bi-weekly build cycle user stories:
   * User can select multiple zones and see them highlighted on map by either choosing on start-up memu or clicking "Menu" button during map view. (Yuan)
   * Users can see his/her current position shown on map via GPS functionality. (xiaowei)
