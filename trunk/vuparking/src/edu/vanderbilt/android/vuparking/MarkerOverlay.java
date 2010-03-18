@@ -19,7 +19,6 @@
 package edu.vanderbilt.android.vuparking;
 
 import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,7 +36,7 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	private int num_areas = 6;
 	private Context mContext;
 	ParkingMap map;
-
+	
 	public MarkerOverlay(ParkingMap parkingmap, Context context) 
 	{
 		super(boundCenterBottom(context.getResources().getDrawable(R.drawable.parking)));
@@ -82,23 +81,35 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		}
 		else Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
 	}
-
+	
 	// Define the action when click on the marker to show detailed information.
 	@Override
 	protected boolean onTap(int index) 
 	{
 		OverlayItem item = mOverlays.get(index);
+		
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 		dialog.setIcon(R.drawable.garages);
 		dialog.setTitle(item.getTitle());
 		int lotId = Integer.parseInt(item.getSnippet());
-
+		
 		if (parkingDb.openDB()) 
 		{
 			ParkingLot p = parkingDb.queryParkingById(lotId);
-			dialog.setMessage("Address: " + p.getAddress() + 
-					"\nCapacity: " + Integer.toString(p.getNumSpot()) +
-					"\nAvailable No.: " + Integer.toString(p.getNumAvailabe()));
+			if (p.getZone() == 5)  // Visitor type.
+			{
+				dialog.setMessage("Address: " + p.getAddress() + 
+						"\nZone: Visitor" + 
+						"\nCapacity: " + Integer.toString(p.getNumSpot()) +
+						"\nAvailable No.: " + Integer.toString(p.getNumAvailabe()) +
+						"\nRate: " + p.getRate());
+			}
+			else
+			{
+				dialog.setMessage("Address: " + p.getAddress() + 
+						"\nCapacity: " + Integer.toString(p.getNumSpot()) +
+						"\nAvailable No.: " + Integer.toString(p.getNumAvailabe()));
+			}			
 		}
 		else 
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();

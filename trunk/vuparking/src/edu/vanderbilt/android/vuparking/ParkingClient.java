@@ -60,14 +60,13 @@ public class ParkingClient {
 		int timeoutConnection = 3000;
 		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 		// Set the default socket timeout (SO_TIMEOUT) 
-		// in milliseconds which is the timeout for waiting for data.
 		int timeoutSocket = 5000;
 		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 		client = new DefaultHttpClient(httpParameters);
 	}
 	
 	// Update all parking lots information.
-	public void getRequest()
+	public void getResponse()
 	{	
 		String getUrl = "http://" + myIP + ":8888/vuparkingservice";
 		HttpGet request = new HttpGet(getUrl);
