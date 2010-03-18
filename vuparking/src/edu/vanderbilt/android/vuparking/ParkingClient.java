@@ -65,13 +65,21 @@ public class ParkingClient {
 		client = new DefaultHttpClient(httpParameters);
 	}
 	
-	// Update all parking lots information.
+	// Get parking lots information from the server
 	public void getResponse()
 	{	
 		String getUrl = "http://" + myIP + ":8888/vuparkingservice";
 		HttpGet request = new HttpGet(getUrl);
+		// Display error msg when error occurs
 		
-		// get response from the server, display error msg when error occurs
+		updateDB();
+		
+		
+	}
+	
+	// Update database
+	public void updateDB()
+	{
 		
 	}
 	
