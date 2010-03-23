@@ -36,7 +36,20 @@ public class VuparkingServiceServlet extends HttpServlet {
 	// Servlet one-time init, prepare data store.
 	public void init() throws ServletException
 	{
-		
+		super.init();
+		// Load parking info data to server data store
+		ArrayList<ParkingInfo> infoCollection = new ArrayList<ParkingInfo>();
+		loadData(infoCollection);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			for (int i = 0; i < infoCollection.size(); i++)
+			{
+				pm.makePersistent(infoCollection.get(i));
+			}
+		}finally
+		{
+			pm.close();
+		}
 	}
 	
 	// Same as loadData in client ParkingDBManager.
@@ -90,13 +103,113 @@ public class VuparkingServiceServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	public void doGet(HttpServletRequest reqest, HttpServletResponse response)
 	{
-		
+		response.setContentType("text/plain");
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		// Using JDO query
+		String query = "select from " + ParkingInfo.class.getName();
+	    List<ParkingInfo> info = (List<ParkingInfo>) pm.newQuery(query).execute();
+	    
+	    JSONArray allInfo = new JSONArray();
+		for (int i = 0; i < info.size(); i++)
+		{
+			JSONObject parkingInfo = new JSONObject();
+			try {
+				parkingInfo.put("id", info.get(i).getID());
+				parkingInfo.put("name", info.get(i).getName());
+				parkingInfo.put("available", info.get(i).getAvailable());
+			} catch (JSONException e)
+			{
+				e.printStackTrace();
+			}
+			allInfo.put(parkingInfo);
+		}
+		// Send response back to client.
+		try {
+			response.getWriter().println(allInfo.toString());
+		}catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	// Handle both post requests from web (modify) and android phone (query).	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{
+		// For debugging post parameter checks.
+		/*Enumeration<String> paramNames = request.getParameterNames();
+		while(paramNames.hasMoreElements()) {
+		      String paramName = (String)paramNames.nextElement();
+		      response.getWriter().print(paramName);
+		      String[] paramValues = request.getParameterValues(paramName);
+		      if (paramValues.length == 1) {
+		        String paramValue = paramValues[0];
+		        if (paramValue.length() == 0)
+		        	response.getWriter().println("No Value");
+		        else
+		        	response.getWriter().println(paramValue);
+		      } else {
+		        for(int i=0; i<paramValues.length; i++) {
+		        	response.getWriter().println(paramValues[i]);
+		        }
+		      }
+		}*/
+			
+		Long id = Long.parseLong(request.getParameter("lotid"));
+		String method = request.getParameter("method");
 		
+		if (id > 0 && method.contentEquals("query"))
+		{
+			// Later return JSON object
+			response.getWriter().print("Receive Query request for id: " + id);
+		    ParkingInfo p = getParkingInfo(id);
+			if (p != null)
+			{
+				response.getWriter().println(" Spot number: " + p.getAvailable());
+			}
+		}
+		else if (id > 0 && method.contentEquals("modify"))
+		{
+			int num = Integer.parseInt(request.getParameter("num_spot"));
+			ParkingInfo p = getParkingInfo(id);
+			if (p != null && num >= 0 && num <= p.getCapacity())  // Validity check
+			{
+			    p.setAvailable(num);
+			    PersistenceManager pm = PMF.get().getPersistenceManager();
+			    try {
+			    	pm.makePersistent(p);
+			    }finally
+			    {
+			    	pm.close();
+			    }
+				response.getWriter().println("Modify available information for id: " + id + " Spot num: " + p.getAvailable());
+			}
+			else 
+			{
+				response.getWriter().println("Invalid number (may exceed capacity): " + num);
+			}
+		}
+		else if (id > 0 && method.contentEquals("insert"))
+		{// A lot of cases to be handled, eg. display. 
+			
+		}
+		else if (id > 0 && method.contentEquals("delete"))
+		{
+			ParkingInfo p = getParkingInfo(id);
+			if (p != null)
+			{
+			    PersistenceManager pm = PMF.get().getPersistenceManager();
+			    try {
+			    	pm.deletePersistent(p);
+			    }finally
+			    {
+			    	pm.close();
+			    }
+				response.getWriter().println("Delete parking information for id: " + id);
+			}
+		}
+		else 
+		{
+			response.getWriter().println("Error for post request");
+		}
 	}
-
 }
