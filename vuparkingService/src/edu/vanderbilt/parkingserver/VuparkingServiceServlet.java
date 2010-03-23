@@ -135,28 +135,10 @@ public class VuparkingServiceServlet extends HttpServlet {
 	// Handle both post requests from web (modify) and android phone (query).	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{
-		// For debugging post parameter checks.
-		/*Enumeration<String> paramNames = request.getParameterNames();
-		while(paramNames.hasMoreElements()) {
-		      String paramName = (String)paramNames.nextElement();
-		      response.getWriter().print(paramName);
-		      String[] paramValues = request.getParameterValues(paramName);
-		      if (paramValues.length == 1) {
-		        String paramValue = paramValues[0];
-		        if (paramValue.length() == 0)
-		        	response.getWriter().println("No Value");
-		        else
-		        	response.getWriter().println(paramValue);
-		      } else {
-		        for(int i=0; i<paramValues.length; i++) {
-		        	response.getWriter().println(paramValues[i]);
-		        }
-		      }
-		}*/
-			
 		Long id = Long.parseLong(request.getParameter("lotid"));
 		String method = request.getParameter("method");
 		
+		// Return the available number of specific parking lot in GAE datastore.
 		if (id > 0 && method.contentEquals("query"))
 		{
 			// Later return JSON object
@@ -167,6 +149,7 @@ public class VuparkingServiceServlet extends HttpServlet {
 				response.getWriter().println(" Spot number: " + p.getAvailable());
 			}
 		}
+		// Modify the available number of specific parking lot.
 		else if (id > 0 && method.contentEquals("modify"))
 		{
 			int num = Integer.parseInt(request.getParameter("num_spot"));
@@ -186,25 +169,6 @@ public class VuparkingServiceServlet extends HttpServlet {
 			else 
 			{
 				response.getWriter().println("Invalid number (may exceed capacity): " + num);
-			}
-		}
-		else if (id > 0 && method.contentEquals("insert"))
-		{// A lot of cases to be handled, eg. display. 
-			
-		}
-		else if (id > 0 && method.contentEquals("delete"))
-		{
-			ParkingInfo p = getParkingInfo(id);
-			if (p != null)
-			{
-			    PersistenceManager pm = PMF.get().getPersistenceManager();
-			    try {
-			    	pm.deletePersistent(p);
-			    }finally
-			    {
-			    	pm.close();
-			    }
-				response.getWriter().println("Delete parking information for id: " + id);
 			}
 		}
 		else 
