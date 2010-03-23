@@ -96,7 +96,8 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		if (parkingDb.openDB()) 
 		{
 			ParkingLot p = parkingDb.queryParkingById(lotId);
-			dialog.setMessage("\nAddress: " + p.getAddress() +
+			dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
+					          "\nAddress: " + p.getAddress() +
 						      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
 						      "\nAvailable No.: " + Integer.toString(p.getNumAvailabe()));
 		}
