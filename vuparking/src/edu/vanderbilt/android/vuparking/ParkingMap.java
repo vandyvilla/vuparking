@@ -44,6 +44,7 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_ZONE = 0; 	//parking zone
 	private final static int MENU_CURLOC = 1;	//current location
 	private final static int MENU_REFRESH = 2;  //refresh parking information
+	private final static int MENU_NULL = 3; //blank button
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -108,6 +109,7 @@ public class ParkingMap extends MapActivity
 		menu.add(Menu.NONE, MENU_ZONE, Menu.NONE, "Select Zone");
 		menu.add(Menu.NONE, MENU_CURLOC, Menu.NONE, "Show My Location");
 		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh");
+		menu.add(Menu.NONE, MENU_NULL, Menu.NONE, " ");
 		return true;
 	}
 
