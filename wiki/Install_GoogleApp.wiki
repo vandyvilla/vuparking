@@ -1,4 +1,4 @@
-#How to install Google App in Eclipse 3.5 (Galileo)
+#summary How to install Google App in Eclipse 3.5 (Galileo)
 
 1. Go to Help -> Install New Software
 
