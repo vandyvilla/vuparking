@@ -14,9 +14,10 @@
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
 
 4th Bi-weekly build cycle user stories:
-  * User can refresh (update) the number of available parking spots of all parking lots from server. 
+  * User can refresh (update) the number of available parking lots of all parking zones.
+
   Sub Task:
-  * Client: manually send request to server, check response, update database; (Yuan)
+  * Client: click Refresh button to update the number of available parking lots; (Yuan)
   * Server: web interface for manually modify available number, display data kept persistent at server side. (Xiaowei)
 
 3rd Bi-weekly build cycle user stories:
