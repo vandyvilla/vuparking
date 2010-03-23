@@ -28,6 +28,7 @@ public final class PMF {
     private PMF() {}
 
     public static PersistenceManagerFactory get() {
-        return pmfInstance;
+    	// Get persistent factory instance. 
+        return pmfInstance;  
     }
 }
