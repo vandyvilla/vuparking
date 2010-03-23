@@ -29,7 +29,7 @@ public class ParkingLot
 	private int num_spot;                   // Capacity in total.
 	private int num_disable;                // Number of available spots specially for disability.
 	private int num_available;              // Number of available spots excluding those for disability.
-	private int rate;                       // For visitor zone.
+	private double rate;                       // For visitor zone.
 
 	public int getId() { return id; }
 	public int getType() { return type; }
@@ -41,7 +41,7 @@ public class ParkingLot
 	public int getNumSpot() { return num_spot; }
 	public int getNumDisable() { return num_disable; }
 	public int getNumAvailabe() { return num_available; }
-	public int getRate() { return rate; }
+	public double getRate() { return rate; }
 
 	public void setId(int ID) { id = ID; }
 	public void setType(int Type) { type = Type; }
@@ -52,10 +52,10 @@ public class ParkingLot
 	public void setNumSpot(int num) { num_spot = num; }
 	public void setNumDisable(int num) { num_disable = num; }
 	public void setNumAvailable(int num) { num_available = num; }
-	public void setRate(int Rate) { rate = Rate; }
+	public void setRate(double rate2) { rate = rate2; }
 
 	public ParkingLot(int id, int type, int zone, String name, String address, double coordinate_x, double coordinate_y, 
-			int num_spot, int num_disable, int num_available, int rate) 
+			int num_spot, int num_disable, int num_available, double rate) 
 	{
 		setId(id);
 		setType(type);
