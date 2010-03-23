@@ -67,27 +67,88 @@ public class ParkingClient {
 	
 	// Get parking lots information from the server
 	public void getResponse()
-	{	
+	{			
 		String getUrl = "http://" + myIP + ":8888/vuparkingservice";
 		HttpGet request = new HttpGet(getUrl);
-		// Display error msg when error occurs
-		
-		updateDB();
-		
-		
+		try 
+		{
+			String result;
+			HttpResponse response = client.execute(request);
+			
+			int status = response.getStatusLine().getStatusCode();
+			if (status == HttpStatus.SC_OK) 
+			{
+		        result = convertToString(response);
+				JSONArray servResp = new JSONArray(result);
+				
+				// Update information in DB
+				updateDB(servResp);
+			}
+			else 
+			{
+				result = "Error when getting data from server.";
+				Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
+			}
+		}
+		catch (SocketTimeoutException e)
+		{
+			Toast.makeText(mContext, "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}	
 	}
 	
-	// Update database
-	public void updateDB()
+	// Update information in DB
+	public void updateDB(JSONArray servResp)
 	{
-		
+		ParkingDBManager manager = new ParkingDBManager();
+		if (manager.openDB())
+		{
+			manager.updateDB(servResp);
+			Toast.makeText(mContext, "Updating finished.", Toast.LENGTH_SHORT).show();
+		}	
 	}
 	
 	// Converting http response to string.
 	public String convertToString(HttpResponse response)
 	{
-
+		String text = "";
+		try
+		{
+		    text = convertToString(response.getEntity().getContent());
+		}
+		catch(Exception ex) {}
+		return text;
 	}
 	
-
+	// Overloaded helper function for parsing to string.
+	public String convertToString(InputStream in)
+	{
+		String text = "";
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		try
+		{
+			while((line = reader.readLine()) != null) 
+			{
+				sb.append(line + "\n");
+			}
+			text = sb.toString();
+		}catch (Exception ex) {}
+		finally 
+		{
+			try 
+			{
+				in.close();
+			}catch (Exception ex) {}
+		}
+		return text;
+	}
 }

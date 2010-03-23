@@ -20,7 +20,13 @@
 package edu.vanderbilt.android.vuparking;
 
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.database.Cursor;
+import android.util.Log;
 
 public class ParkingDBManager
 {
@@ -81,8 +87,8 @@ public class ParkingDBManager
 		lots.add(new ParkingLot(12, GARAGE, MEDICAL, "South garage", "2376 Children's Way", 36.139454,-86.804375, 100, 20, 80, 0));
 		lots.add(new ParkingLot(13, GARAGE, MEDICAL, "Medical center East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 100, 20, 80, 0));
 		lots.add(new ParkingLot(14, GARAGE, MEDICAL, "Vanderbilt Clinic garage", "1499 21st Ave S", 36.140381, -86.800899, 100, 20, 80, 0));
-		lots.add(new ParkingLot(15, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 50, 10, 40, 0));
-		lots.add(new ParkingLot(16, LOT, VISITOR, "Planet beach", "2099 Scarritt Pl", 36.145770, -86.799182, 20, 0, 20, 0));	
+		lots.add(new ParkingLot(15, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 50, 10, 40, 0.75));
+		lots.add(new ParkingLot(16, GARAGE, VISITOR, "Wesley Place Garage", "1901-2035 Scarritt Pl", 36.145736,-86.79871, 20, 0, 20, 0.75));
 	}
 
 	// Query the database for parking lot by id.
@@ -132,6 +138,40 @@ public class ParkingDBManager
 		c.close();
 		return lotInZone;
 	}
+	
+	// Update database information based on parking lot unique ID number.
+	// !! Right now doesn't support inserting or deleting entry in DB.
+	public boolean updateDB(JSONArray servResp)
+	{
+		try {
+			for (int i = 0; i < servResp.length(); i++)
+		    {
+			    JSONObject lot = (JSONObject) servResp.get(i);
+			    int id = lot.getInt("id");
+			    ParkingLot p = queryParkingById(id);
+			    if (p != null)
+			    {
+			    	int num = lot.getInt("available");
+			    	// Database consistency check.
+			    	if (num >=0 && num < p.getNumSpot())
+			    	{
+			    		adapter.updateLot(id, num, num);
+				    	Log.i("i", "Updating entry :"+Integer.toString(id));
+			    	}
+			    	else
+			    		Log.i("i", "Error! Exceed the capacity of entry: "+Integer.toString(id));
+			    }
+			    else
+			    {
+			    	Log.i("i", "Entry not found in DB");
+			    }
+		    }
+		}catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
+		return true;
+	}
 
 	// Delete all parking lots information in DB.
 	public boolean cleanUp() 
@@ -145,4 +185,3 @@ public class ParkingDBManager
 			return false;
 	}
 }
-

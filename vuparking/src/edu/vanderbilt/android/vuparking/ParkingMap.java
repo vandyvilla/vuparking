@@ -23,6 +23,8 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
+import edu.vanderbilt.android.vuparking.network.ParkingClient;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +43,7 @@ public class ParkingMap extends MapActivity
 
 	private final static int MENU_ZONE = 0; 	//parking zone
 	private final static int MENU_CURLOC = 1;	//current location
+	private final static int MENU_REFRESH = 2;  //refresh parking information
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -104,6 +107,7 @@ public class ParkingMap extends MapActivity
 		super.onCreateOptionsMenu(menu);
 		menu.add(Menu.NONE, MENU_ZONE, Menu.NONE, "Select Zone");
 		menu.add(Menu.NONE, MENU_CURLOC, Menu.NONE, "Show My Location");
+		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh");
 		return true;
 	}
 
@@ -122,6 +126,11 @@ public class ParkingMap extends MapActivity
 			setCenter(myLocation.getCurLocation(), zoomLevel);
 			if (myLocation.signal == false)
 				Toast.makeText(this, "Displaying your default location", Toast.LENGTH_SHORT).show();
+			break;
+		case MENU_REFRESH:
+			Toast.makeText(this, "Updating information with server...", Toast.LENGTH_SHORT).show();
+			ParkingClient client = new ParkingClient(this);
+			client.getResponse();
 			break;
 		}
 		return true;
