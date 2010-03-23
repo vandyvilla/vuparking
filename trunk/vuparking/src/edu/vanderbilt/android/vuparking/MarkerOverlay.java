@@ -96,22 +96,11 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		if (parkingDb.openDB()) 
 		{
 			ParkingLot p = parkingDb.queryParkingById(lotId);
-			if (p.getZone() == 5)  // Visitor type.
-			{
-				dialog.setMessage("Address: " + p.getAddress() + 
-						"\nZone: Visitor" + 
-						"\nCapacity: " + Integer.toString(p.getNumSpot()) +
-						"\nAvailable No.: " + Integer.toString(p.getNumAvailabe()) +
-						"\nRate: " + p.getRate());
-			}
-			else
-			{
-				dialog.setMessage("Address: " + p.getAddress() + 
-						"\nCapacity: " + Integer.toString(p.getNumSpot()) +
-						"\nAvailable No.: " + Integer.toString(p.getNumAvailabe()));
-			}			
+			dialog.setMessage("\nAddress: " + p.getAddress() +
+						      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+						      "\nAvailable No.: " + Integer.toString(p.getNumAvailabe()));
 		}
-		else 
+		else
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
 
 		dialog.setNegativeButton("Back", new DialogInterface.OnClickListener() 
@@ -126,7 +115,8 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	}
 
 	@Override
-	public int size() {
+	public int size() 
+	{
 		return mOverlays.size();
 	}
 }
