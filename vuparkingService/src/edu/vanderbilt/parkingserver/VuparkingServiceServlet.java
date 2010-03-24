@@ -30,7 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VuparkingServiceServlet extends HttpServlet {
+public class VuparkingServiceServlet extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;	
 	
 	// Servlet one-time init, prepare data store.
@@ -44,6 +45,8 @@ public class VuparkingServiceServlet extends HttpServlet {
 		try {
 			for (int i = 0; i < infoCollection.size(); i++)
 			{
+				//Key key = KeyFactory.createKey(ParkingInfo.class.getName(), infoCollection.get(i).getID());
+				//infoCollection.get(i).setKey(key);
 				pm.makePersistent(infoCollection.get(i));
 			}
 		}finally
@@ -90,6 +93,7 @@ public class VuparkingServiceServlet extends HttpServlet {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		ParkingInfo p, copy = null;
 		try {
+			//Key k = KeyFactory.createKey(ParkingInfo.class.getName(), id);
 			p = pm.getObjectById(ParkingInfo.class, id);
 			copy = pm.detachCopy(p);
 		} finally
@@ -146,7 +150,7 @@ public class VuparkingServiceServlet extends HttpServlet {
 		    ParkingInfo p = getParkingInfo(id);
 			if (p != null)
 			{
-				response.getWriter().println(" Spot number: " + p.getAvailable());
+				response.getWriter().println(" Available number: " + p.getAvailable());
 			}
 		}
 		// Modify the available number of specific parking lot.
