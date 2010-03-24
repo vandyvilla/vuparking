@@ -60,7 +60,7 @@ class LocationOverlay extends MyLocationOverlay
 		super.draw(canvas, mv, shadow);
 		Point screenPts = new Point();
 		mv.getProjection().toPixels(getCurLocation(), screenPts);
-		Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.marker);
+		Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.loc);
 		canvas.drawBitmap(bmp, screenPts.x-16, screenPts.y-32, null);
 		return true;
 	}

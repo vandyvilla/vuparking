@@ -81,8 +81,8 @@ public class ParkingMap extends MapActivity
 	// Add zone color, markers onto map view.
 	private void addAllOverlay() 
 	{
-		ZoneOverlay zOverlay = new ZoneOverlay(this);
-		addOverlay(zOverlay);
+		//ZoneOverlay zOverlay = new ZoneOverlay(this);
+		//addOverlay(zOverlay);
 
 		MarkerOverlay mOverlay = new MarkerOverlay(this,this);
 		addOverlay(mOverlay);
