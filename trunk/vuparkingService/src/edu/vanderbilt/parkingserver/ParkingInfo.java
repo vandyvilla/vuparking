@@ -24,9 +24,17 @@ import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(detachable="true")
 public class ParkingInfo {
-    //@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	
+	//@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     //private Key key;
-
+    
+    /*public void setKey(Key key) {
+        this.key = key;
+    }
+    
+    public Key getKey() {
+        return key;
+    }*/
 	@PrimaryKey
     @Persistent
     private Long ID;  // Primary key for data store.
@@ -58,93 +66,115 @@ public class ParkingInfo {
     @Persistent
     private double Rate;    
 
-    public Long getID() {
+    public Long getID() 
+    {
         return ID;
     }
 
-    public String getName() {
+    public String getName() 
+    {
         return Name;
     }
     
-    public String getAddress() {
+    public String getAddress() 
+    {
     	return Address;
     }
     
-    public int getType() {
+    public int getType() 
+    {
     	return Type;
     }
     
-    public int getZone() {
+    public int getZone() 
+    {
     	return Zone;
     }
     
-    public double getLatitude() {
+    public double getLatitude() 
+    {
     	return Coordinate_x;
     }
 
-    public double getLongtitude() {
+    public double getLongtitude() 
+    {
     	return Coordinate_y;
     }
     
-    public int getCapacity() {
+    public int getCapacity() 
+    {
     	return Capacity;
     }
     
-    public int getAvailable() {
+    public int getAvailable() 
+    {
         return Available_num;
     }
     
-    public int getDisable() {
+    public int getDisable() 
+    {
     	return Disable_num;
     }
     
-    public double getRate() {
+    public double getRate() 
+    {
     	return Rate;
     }
 
-    public void setID(Long id) {
+    public void setID(Long id) 
+    {
     	this.ID = id;
     }
 
-    public void setName(String name) {
+    public void setName(String name) 
+    {
         this.Name = name;
     }
     
-    public void setAddress(String addr) {
+    public void setAddress(String addr) 
+    {
         this.Address = addr;
     }
     
-    public void setType(int type) {
+    public void setType(int type) 
+    {
         this.Type = type;
     }
     
-    public void setZone(int zone) {
+    public void setZone(int zone) 
+    {
         this.Zone = zone;
     }
     
-    public void setCoordinates(double x, double y) {
+    public void setCoordinates(double x, double y) 
+    {
         this.Coordinate_x = x;
         this.Coordinate_y = y;
     }
     
-    public void setCapacity(int num) {
+    public void setCapacity(int num) 
+    {
         this.Capacity = num;
     }
 
-    public void setAvailable(int num) {
+    public void setAvailable(int num) 
+    {
     	 this.Available_num = num;
     }
     
-    public void setDisable(int num) {
+    public void setDisable(int num) 
+    {
         this.Disable_num = num;
     }
     
-    public void setRate(double rate) {
+    public void setRate(double rate) 
+    {
         this.Rate = rate;
     }    
 
     public ParkingInfo(int id, int type, int zone, String name, String addr, double x, double y, 
-			int capacity, int num_disable, int num_available, double rate) {
+			int capacity, int num_disable, int num_available, double rate) 
+    {
         this.ID = Long.parseLong(Integer.toString(id));
         this.Name = name;
         this.Address = addr;

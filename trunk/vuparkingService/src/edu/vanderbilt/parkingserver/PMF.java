@@ -21,14 +21,16 @@ package edu.vanderbilt.parkingserver;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
 
-public final class PMF {
+public final class PMF 
+{
     private static final PersistenceManagerFactory pmfInstance =
         JDOHelper.getPersistenceManagerFactory("transactions-optional");
 
     private PMF() {}
 
-    public static PersistenceManagerFactory get() {
+    public static PersistenceManagerFactory get() 
+    {
     	// Get persistent factory instance. 
-        return pmfInstance;  
+        return pmfInstance;
     }
 }
