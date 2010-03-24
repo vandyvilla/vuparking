@@ -37,6 +37,8 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	private Context mContext;
 	ParkingMap map;
 	
+	private Integer[] markers = { R.drawable.yellow, R.drawable.lightblue, R.drawable.green, R.drawable.red, R.drawable.pink, R.drawable.orange};
+	
 	public MarkerOverlay(ParkingMap parkingmap, Context context) 
 	{
 		super(boundCenterBottom(context.getResources().getDrawable(R.drawable.parking)));
@@ -74,7 +76,8 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 						double lng = lots.get(j).getLongtitude();
 						GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
 						OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
-						overlay.setMarker(boundCenterBottom(mContext.getResources().getDrawable(R.drawable.garage_marker)));
+						int zone = lots.get(j).getZone();
+						overlay.setMarker(boundCenterBottom(mContext.getResources().getDrawable(markers[zone])));
 						addOverlay(overlay);
 					}
 				}	
@@ -87,7 +90,7 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	protected boolean onTap(int index) 
 	{
 		OverlayItem item = mOverlays.get(index);
-		
+		String[] ZONES = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical", "Visitor"};
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 		dialog.setIcon(R.drawable.garages);
 		dialog.setTitle(item.getTitle());
@@ -97,9 +100,10 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		{
 			ParkingLot p = parkingDb.queryParkingById(lotId);
 			dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
+					          "\nZone: " + ZONES[p.getZone()] +
 					          "\nAddress: " + p.getAddress() +
 						      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-						      "\nAvailable No.: " + Integer.toString(p.getNumAvailabe()));
+						      "\nAvailable Spotss: " + Integer.toString(p.getNumAvailabe()));
 		}
 		else
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
