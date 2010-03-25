@@ -70,21 +70,25 @@ public class VuparkingServiceServlet extends HttpServlet
 		final int VISITOR = 5;
 		
 		infoCollection.add(new ParkingInfo(1, LOT, ZONE1, "Magnolia lawn", "", 36.142773, -86.798635, 20, 5, 15, 0));
-		infoCollection.add(new ParkingInfo(2, LOT, ZONE1, "English Language Center", "1226 18th Ave S", 36.141802, -86.795685, 50, 10, 40, 0));
-		infoCollection.add(new ParkingInfo(3, LOT, ZONE1, "Wyatt Center", "", 36.139834, -86.798586, 50, 10, 40, 0));
-		infoCollection.add(new ParkingInfo(4, LOT, ZONE2, "Baker building", "118 21st Ave S", 36.149334, -86.799635, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(5, LOT, ZONE2, "West End Ave", "", 36.149472, -86.802467, 20, 5, 15, 0));
-		infoCollection.add(new ParkingInfo(6, LOT, ZONE2, "Law School", "Scarritt Pl", 36.148222, -86.800073, 50, 10, 40, 0));
-		infoCollection.add(new ParkingInfo(7, LOT, ZONE3, "Olin hall", "2400 Highland Ave", 36.142937, -86.805072, 20, 0, 20, 0));
-		infoCollection.add(new ParkingInfo(8, GARAGE, ZONE3, "25th Ave Staff garage", "2499 Highland Ave", 36.142365, -86.806124, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(9, LOT, ZONE4, "Blakemore Ave", "2140 Belcourt Ave", 36.137401, -86.804236, 20, 0, 20, 0));
-		infoCollection.add(new ParkingInfo(10, LOT, MEDICAL, "Natchez field", "2964 Dudley Ave", 36.141120, -86.812059, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(11, GARAGE, MEDICAL, "Central garage", "2401 Highland Ave", 36.141924,-86.805909, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(12, GARAGE, MEDICAL, "South garage", "2376 Children's Way", 36.139454,-86.804375, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(13, GARAGE, MEDICAL, "Medical center East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(14, GARAGE, MEDICAL, "Vanderbilt Clinic garage", "1499 21st Ave S", 36.140381, -86.800899, 100, 20, 80, 0));
-		infoCollection.add(new ParkingInfo(15, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 50, 10, 40, 0.75));
-		infoCollection.add(new ParkingInfo(16, GARAGE, VISITOR, "Wesley Place Garage", "1901-2035 Scarritt Pl", 36.145736,-86.79871, 20, 0, 20, 0.75));
+        infoCollection.add(new ParkingInfo(2, LOT, ZONE1, "English Language Center", "1226 18th Ave S", 36.141802, -86.795685, 50, 10, 40, 0));
+        infoCollection.add(new ParkingInfo(3, LOT, ZONE1, "Wyatt Center", "", 36.139834, -86.798586, 50, 10, 40, 0));
+        infoCollection.add(new ParkingInfo(4, LOT, ZONE2, "Baker building", "118 21st Ave S", 36.149334, -86.799635, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(5, LOT, ZONE2, "West End Ave", "", 36.149472, -86.802467, 20, 5, 15, 0));
+        infoCollection.add(new ParkingInfo(6, LOT, ZONE2, "Law School", "Scarritt Pl", 36.148222, -86.800073, 50, 10, 40, 0));
+        infoCollection.add(new ParkingInfo(7, LOT, ZONE3, "Olin hall", "2400 Highland Ave", 36.142937, -86.805072, 20, 0, 20, 0));
+        infoCollection.add(new ParkingInfo(8, GARAGE, ZONE3, "25th Ave Staff garage", "2499 Highland Ave", 36.142365, -86.806124, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(9, GARAGE, ZONE3, "Kensington Garage", "", 36.147163,-86.807613, 20, 0, 20, 0));
+        infoCollection.add(new ParkingInfo(10, LOT, ZONE3, "Parmer Field House", "", 36.145984,-86.808558, 20, 0, 20, 0));        
+        infoCollection.add(new ParkingInfo(11, LOT, ZONE4, "Blakemore Ave", "2140 Belcourt Ave", 36.137401, -86.804236, 20, 0, 20, 0));
+        infoCollection.add(new ParkingInfo(12, LOT, ZONE4, "Real Estate", "2189-2199 Belcourt Ave", 36.136956,-86.805073, 20, 0, 20, 0));
+        infoCollection.add(new ParkingInfo(13, LOT, MEDICAL, "Natchez field", "2964 Dudley Ave", 36.141120, -86.812059, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(14, GARAGE, MEDICAL, "Central garage", "2401 Highland Ave", 36.141924,-86.805909, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(15, GARAGE, MEDICAL, "South garage", "2376 Children's Way", 36.139454,-86.804375, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(16, GARAGE, MEDICAL, "Medical center East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(17, GARAGE, MEDICAL, "Vanderbilt Clinic garage", "1499 21st Ave S", 36.140381, -86.800899, 100, 20, 80, 0));
+        infoCollection.add(new ParkingInfo(18, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 50, 10, 40, 0.75));
+        infoCollection.add(new ParkingInfo(19, LOT, VISITOR, "Planet beach", "2099 Scarritt Pl", 36.145770, -86.799182, 20, 0, 20, 0.75));
+        infoCollection.add(new ParkingInfo(20, LOT, VISITOR, "Jess Neely Dr", "", 36.143333,-86.807935, 20, 0, 20, 0.75));
 	}
 	
 	// Helper function for getting Object by ID from data store.
