@@ -173,7 +173,7 @@ public class ParkingInfo {
     }    
 
     public ParkingInfo(int id, int type, int zone, String name, String addr, double x, double y, 
-			int capacity, int num_disable, int num_available, double rate) 
+    		           int capacity, int num_disable, int num_available, double rate) 
     {
         this.ID = Long.parseLong(Integer.toString(id));
         this.Name = name;
