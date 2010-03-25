@@ -55,7 +55,7 @@ public class ParkingLot
 	public void setRate(double rate2) { rate = rate2; }
 
 	public ParkingLot(int id, int type, int zone, String name, String address, double coordinate_x, double coordinate_y, 
-			int num_spot, int num_disable, int num_available, double rate) 
+			int num_spot, int num_available, int num_disable, double rate) 
 	{
 		setId(id);
 		setType(type);

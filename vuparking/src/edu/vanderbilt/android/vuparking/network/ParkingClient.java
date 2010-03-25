@@ -43,8 +43,6 @@ import android.widget.Toast;
 public class ParkingClient 
 {
 	private Context mContext;
-	// IP representation of local machine
-	private final String myIP = "10.0.2.2";
 	private HttpClient client;
 
 	public ParkingClient(Context context)
@@ -63,7 +61,8 @@ public class ParkingClient
 	// Get parking lots information from the server
 	public void getResponse()
 	{			
-		String getUrl = "http://" + myIP + ":8888/vuparkingservice";
+		//String getUrl = "http://10.0.2.2:8888/vuparkingservice";
+		String getUrl = "http://vuparking.appspot.com/vuparkingservice";
 		HttpGet request = new HttpGet(getUrl);
 		try 
 		{
@@ -74,6 +73,7 @@ public class ParkingClient
 			if (status == HttpStatus.SC_OK) 
 			{
 				result = convertToString(response);
+				//Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
 				JSONArray servResp = new JSONArray(result);
 
 				// Update information in DB
@@ -91,11 +91,11 @@ public class ParkingClient
 		}
 		catch (JSONException e)
 		{
-			e.printStackTrace();
+			Toast.makeText(mContext, "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			Toast.makeText(mContext, "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
 		}	
 	}
 
@@ -107,7 +107,8 @@ public class ParkingClient
 		{
 			manager.updateDB(servResp);
 			Toast.makeText(mContext, "Updating finished.", Toast.LENGTH_SHORT).show();
-		}	
+		}
+		else Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_SHORT).show();
 	}
 
 	// Converting http response to string.
