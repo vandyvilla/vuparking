@@ -1,4 +1,4 @@
-#How to debug GPS functionality of android in eclipse
+#summary How to debug GPS functionality of android in eclipse
 
 1. Open DDMS perspective.
 
