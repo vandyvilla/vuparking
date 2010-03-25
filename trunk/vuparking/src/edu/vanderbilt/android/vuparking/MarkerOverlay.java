@@ -103,7 +103,7 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 					          "\nZone: " + ZONES[p.getZone()] +
 					          "\nAddress: " + p.getAddress() +
 						      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-						      "\nAvailable Spotss: " + Integer.toString(p.getNumAvailabe()));
+						      "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
 		}
 		else
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();

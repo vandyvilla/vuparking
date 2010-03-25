@@ -106,9 +106,9 @@ public class ParkingMap extends MapActivity
 	public boolean onCreateOptionsMenu (Menu menu)
 	{
 		super.onCreateOptionsMenu(menu);
-		menu.add(Menu.NONE, MENU_ZONE, Menu.NONE, "Select Zone");
-		menu.add(Menu.NONE, MENU_CURLOC, Menu.NONE, "Show My Location");
-		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh");
+		menu.add(Menu.NONE, MENU_ZONE, Menu.NONE, "Select Zone").setIcon(R.drawable.menu_zone);
+		menu.add(Menu.NONE, MENU_CURLOC, Menu.NONE, "Show My Location").setIcon(R.drawable.menu_loc);
+		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh").setIcon(R.drawable.menu_refresh);
 		menu.add(Menu.NONE, MENU_NULL, Menu.NONE, " ");
 		return true;
 	}
