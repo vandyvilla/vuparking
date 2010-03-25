@@ -23,17 +23,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -45,13 +40,13 @@ import edu.vanderbilt.android.vuparking.ParkingDBManager;
 import android.content.Context;
 import android.widget.Toast;
 
-public class ParkingClient {
-	
+public class ParkingClient 
+{
 	private Context mContext;
 	// IP representation of local machine
 	private final String myIP = "10.0.2.2";
 	private HttpClient client;
-	
+
 	public ParkingClient(Context context)
 	{
 		mContext = context;
@@ -64,7 +59,7 @@ public class ParkingClient {
 		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 		client = new DefaultHttpClient(httpParameters);
 	}
-	
+
 	// Get parking lots information from the server
 	public void getResponse()
 	{			
@@ -74,13 +69,13 @@ public class ParkingClient {
 		{
 			String result;
 			HttpResponse response = client.execute(request);
-			
+
 			int status = response.getStatusLine().getStatusCode();
 			if (status == HttpStatus.SC_OK) 
 			{
-		        result = convertToString(response);
+				result = convertToString(response);
 				JSONArray servResp = new JSONArray(result);
-				
+
 				// Update information in DB
 				updateDB(servResp);
 			}
@@ -103,7 +98,7 @@ public class ParkingClient {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	// Update information in DB
 	public void updateDB(JSONArray servResp)
 	{
@@ -114,19 +109,19 @@ public class ParkingClient {
 			Toast.makeText(mContext, "Updating finished.", Toast.LENGTH_SHORT).show();
 		}	
 	}
-	
+
 	// Converting http response to string.
 	public String convertToString(HttpResponse response)
 	{
 		String text = "";
 		try
 		{
-		    text = convertToString(response.getEntity().getContent());
+			text = convertToString(response.getEntity().getContent());
 		}
 		catch(Exception ex) {}
 		return text;
 	}
-	
+
 	// Overloaded helper function for parsing to string.
 	public String convertToString(InputStream in)
 	{
