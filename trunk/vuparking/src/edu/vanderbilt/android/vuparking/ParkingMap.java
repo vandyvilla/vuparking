@@ -169,17 +169,18 @@ public class ParkingMap extends MapActivity
 		}
 		if (id==MENU_DISCAL)
 		{
-			int total_lots_num=20;
+//			int total_lots_num=20;
 			DistanceCalculator disCal = new DistanceCalculator();
-			ParkingDBManager lots = new ParkingDBManager();
+//			ParkingDBManager lots = new ParkingDBManager();
 			
 			builder.setTitle("Distance from your current location to...");
-			CharSequence[] parkingLots=lots.getAllLots();
+//			CharSequence[] parkingLots=lots.getAllLots(); //name of parking lot
+/*
 			for (int i=0; i<total_lots_num; i++)
 			{
 				disCal.addItem(parkingLots[i]);
 			}
-			
+*/			
 			builder.setAdapter(disCal, new DialogInterface.OnClickListener(){
 
 				public void onClick(DialogInterface dialog, int which) {

@@ -45,6 +45,7 @@ public class ParkingDBManager
 	public static final int ZONE4 = 3;
 	public static final int MEDICAL = 4;
 	public static final int VISITOR = 5;
+	public static final int TOTAL_LOTS_NUM=20;
 
 
 	// Open or Create the database.
@@ -192,5 +193,20 @@ public class ParkingDBManager
 			return true;
 		else 
 			return false;
+	}
+
+	public CharSequence[] getAllLots()
+	{
+		CharSequence[] lots = new CharSequence[TOTAL_LOTS_NUM];
+		
+		for (int i=0; i<TOTAL_LOTS_NUM; i++)
+		{
+			ParkingLot p = queryParkingById(i);
+			lots[i]=p.getName();
+			
+		}
+		
+		return lots;
+		
 	}
 }
