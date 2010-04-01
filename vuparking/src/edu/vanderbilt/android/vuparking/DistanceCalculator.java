@@ -30,53 +30,49 @@ import android.widget.ListAdapter;
 
 public class DistanceCalculator implements ListAdapter
 {
-	private ArrayList<String> lots = new ArrayList();
+	LocationOverlay myLocation;
+	private final static int TOTAL_LOT_NUM = 20; 	
 	
-	void calculateDistance()
+	public void calculateDistance()
 	{
-		LocationOverlay myLocation;
-		int total_num=20;
+		ArrayList<Double> distances = new ArrayList<Double>();
 		
-		Location here = myLocation.getCurLocation();
-		
-		ArrayList<Double> distances = new ArrayList();
+		//Set current location
+		GeoPoint p = myLocation.getCurLocation();
+		Location here = new Location("");
+		here.setLatitude(p.getLatitudeE6() * 1.0E-6);
+		here.setLongitude(p.getLongitudeE6() * 1.0E-6);
         
         ParkingDBManager parkingDb = new ParkingDBManager();
         
         Location location = new Location("");
-        for (int i = 0; i < total_num; i++) 
+        for (int i = 0; i < TOTAL_LOT_NUM; i++) 
         {
-            ParkingLot p = parkingDb.queryParkingById(i);    
-        	location.setLatitude(p.getLatitude() * 1.0E-6);
-            location.setLongitude(p.getLongtitude() * 1.0E-6);
-            distances.add(here.distanceTo(location));
+            ParkingLot lot = parkingDb.queryParkingById(i);    
+        	location.setLatitude(lot.getLatitude() * 1.0E-6);
+            location.setLongitude(lot.getLongtitude() * 1.0E-6);
+            distances.add((double)here.distanceTo(location)); //in meter
         }
 
 	}
-	
-	
-	public void addItem(CharSequence parkingLots)
+
+	public boolean areAllItemsEnabled() 
 	{
-		lots.add((String) parkingLots);
-	}
-
-	public boolean areAllItemsEnabled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean isEnabled(int position) {
-		// TODO Auto-generated method stub
+	public boolean isEnabled(int position) 
+	{
 		return false;
 	}
 
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getCount() 
+	{
+		return TOTAL_LOT_NUM;
 	}
 
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
+	public Object getItem(int position) 
+	{
 		return null;
 	}
 
@@ -91,7 +87,7 @@ public class DistanceCalculator implements ListAdapter
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -119,4 +115,5 @@ public class DistanceCalculator implements ListAdapter
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
