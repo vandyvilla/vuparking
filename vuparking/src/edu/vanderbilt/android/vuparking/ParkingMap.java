@@ -18,20 +18,20 @@
 
 package edu.vanderbilt.android.vuparking;
 
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-
-import edu.vanderbilt.android.vuparking.network.ParkingClient;
-
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+
+import edu.vanderbilt.android.vuparking.network.ParkingClient;
 
 public class ParkingMap extends MapActivity 
 {
@@ -44,7 +44,7 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_ZONE = 0; 	//parking zone
 	private final static int MENU_CURLOC = 1;	//current location
 	private final static int MENU_REFRESH = 2;  //refresh parking information
-	private final static int MENU_NULL = 3; //blank button
+	private final static int MENU_DISCAL = 3; //calculate distance
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -109,7 +109,8 @@ public class ParkingMap extends MapActivity
 		menu.add(Menu.NONE, MENU_ZONE, Menu.NONE, "Select Zone").setIcon(R.drawable.menu_zone);
 		menu.add(Menu.NONE, MENU_CURLOC, Menu.NONE, "Show My Location").setIcon(R.drawable.menu_loc);
 		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh").setIcon(R.drawable.menu_refresh);
-		menu.add(Menu.NONE, MENU_NULL, Menu.NONE, " ");
+		//to do: find an icon for it
+		menu.add(Menu.NONE, MENU_DISCAL, Menu.NONE, "Calculate Distance");
 		return true;
 	}
 
@@ -134,6 +135,10 @@ public class ParkingMap extends MapActivity
 			ParkingClient client = new ParkingClient(this);
 			client.getResponse();
 			break;
+		case MENU_DISCAL:
+			showDialog(MENU_DISCAL);		// pop up distance calculation results
+			break;
+			
 		}
 		return true;
 	}
@@ -142,23 +147,48 @@ public class ParkingMap extends MapActivity
 	protected Dialog onCreateDialog(int id)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical", "Visitor"};
-		builder.setTitle("Please pick your zones");
-		builder.setMultiChoiceItems(zones, zoneToDisplay, new DialogInterface.OnMultiChoiceClickListener() 
-		{				
-			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-				zoneToDisplay[which] = isChecked;
-			}
-		});
-
-		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
+		if (id==MENU_ZONE)
 		{
-			public void onClick(DialogInterface dialog, int which) 
+			CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical", "Visitor"};
+			builder.setTitle("Please pick your zones");
+			builder.setMultiChoiceItems(zones, zoneToDisplay, new DialogInterface.OnMultiChoiceClickListener() 
+			{				
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					zoneToDisplay[which] = isChecked;
+				}
+			});
+
+			builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
 			{
-				dialog.dismiss();
-				refreshOverlay();          // Refresh all the overlay items on map.
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+					refreshOverlay();          // Refresh all the overlay items on map.
+				}
+			});
+		}
+		if (id==MENU_DISCAL)
+		{
+			int total_lots_num=20;
+			DistanceCalculator disCal = new DistanceCalculator();
+			ParkingDBManager lots = new ParkingDBManager();
+			
+			builder.setTitle("Distance from your current location to...");
+			CharSequence[] parkingLots=lots.getAllLots();
+			for (int i=0; i<total_lots_num; i++)
+			{
+				disCal.addItem(parkingLots[i]);
 			}
-		});
+			
+			builder.setAdapter(disCal, new DialogInterface.OnClickListener(){
+
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO go to map view after clicking
+					
+				}});
+
+		}
+
 		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int which) 
@@ -166,6 +196,7 @@ public class ParkingMap extends MapActivity
 				dialog.dismiss();
 			}
 		});
+		
 		return builder.create();
 	}
 
