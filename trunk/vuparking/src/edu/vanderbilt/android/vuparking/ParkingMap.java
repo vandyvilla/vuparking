@@ -37,6 +37,7 @@ public class ParkingMap extends MapActivity
 {
 	private static MapView mv;
 	public boolean[] zoneToDisplay;
+	public boolean[] settings = {false, false, false, false};
 
 	private LocationOverlay myLocation;
 	private int zoomLevel;
@@ -44,7 +45,7 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_ZONE = 0; 	//parking zone
 	private final static int MENU_CURLOC = 1;	//current location
 	private final static int MENU_REFRESH = 2;  //refresh parking information
-	private final static int MENU_DISCAL = 3; //calculate distance
+	private final static int MENU_SETTINGS = 3; //settings
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -109,8 +110,7 @@ public class ParkingMap extends MapActivity
 		menu.add(Menu.NONE, MENU_ZONE, Menu.NONE, "Select Zone").setIcon(R.drawable.menu_zone);
 		menu.add(Menu.NONE, MENU_CURLOC, Menu.NONE, "Show My Location").setIcon(R.drawable.menu_loc);
 		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh").setIcon(R.drawable.menu_refresh);
-		//to do: find an icon for it
-		menu.add(Menu.NONE, MENU_DISCAL, Menu.NONE, "Calculate Distance");
+		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, "Settings").setIcon(R.drawable.menu_setting);
 		return true;
 	}
 
@@ -135,10 +135,9 @@ public class ParkingMap extends MapActivity
 			ParkingClient client = new ParkingClient(this);
 			client.getResponse();
 			break;
-		case MENU_DISCAL:
-			showDialog(MENU_DISCAL);		// pop up distance calculation results
+		case MENU_SETTINGS:
+			showDialog(MENU_SETTINGS);
 			break;
-			
 		}
 		return true;
 	}
@@ -146,19 +145,29 @@ public class ParkingMap extends MapActivity
 	// Define the pop up dialog for choosing zones.
 	protected Dialog onCreateDialog(int id)
 	{
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		if (id==MENU_ZONE)
+		switch(id)
 		{
+		case MENU_ZONE:
 			CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical", "Visitor"};
 			builder.setTitle("Please pick your zones");
 			builder.setMultiChoiceItems(zones, zoneToDisplay, new DialogInterface.OnMultiChoiceClickListener() 
-			{				
+			{
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 					zoneToDisplay[which] = isChecked;
 				}
 			});
+			
+			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+				}
+			});
 
-			builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
+			builder.setPositiveButton("Done", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int which) 
 				{
@@ -166,28 +175,35 @@ public class ParkingMap extends MapActivity
 					refreshOverlay();          // Refresh all the overlay items on map.
 				}
 			});
-		}
-		if (id==MENU_DISCAL)
-		{
-			DistanceCalculator disCal = new DistanceCalculator(this);	
-			builder.setTitle("Distance from your current location to...");	
-			builder.setAdapter(disCal, new DialogInterface.OnClickListener(){
-
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO go to map view after clicking
-					
-				}});
-
-		}
-
-		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
-		{
-			public void onClick(DialogInterface dialog, int which) 
+			break;
+		case MENU_SETTINGS:
+			CharSequence[] settingItem = {"Include fully occupied lots", "Apply time policy", "Show handicapped spots", "Switch to street view"};
+			builder.setTitle("Settings");
+			builder.setMultiChoiceItems(settingItem, settings, new DialogInterface.OnMultiChoiceClickListener() 
 			{
-				dialog.dismiss();
-			}
-		});
-		
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					settings[which] = isChecked;
+				}
+			});
+			
+			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+				}
+			});			
+
+			builder.setPositiveButton("Done", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+					refreshOverlay();          // Refresh all the overlay items on map.
+				}
+			});
+			break;
+		}
 		return builder.create();
 	}
 
