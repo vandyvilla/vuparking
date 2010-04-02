@@ -22,21 +22,39 @@ import java.util.ArrayList;
 
 import com.google.android.maps.GeoPoint;
 
-import android.database.DataSetObserver;
+import android.content.Context;
 import android.location.Location;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-public class DistanceCalculator implements ListAdapter
+public class DistanceCalculator extends ArrayAdapter<CharSequence>
 {
+	static ParkingMap app;
+	static Context context = app.getApplicationContext();
 	LocationOverlay myLocation;
-	private final static int TOTAL_LOT_NUM = 20; 	
-	
-	public void calculateDistance()
+	private final static int TOTAL_LOT_NUM = 20;
+
+	DistanceCalculator(Context c)
 	{
-		ArrayList<Double> distances = new ArrayList<Double>();
+		super(c, R.layout.distancemenu, 0);
+	}
+	
+	public CharSequence[] getLotName()
+	{
+		ParkingDBManager lots = new ParkingDBManager();
+		CharSequence[] parkingLots=lots.getAllLots(); //name of parking lot
+	
+		return parkingLots;
 		
+	}
+
+	
+	public CharSequence[] calculateDistance()
+	{
+		ArrayList<Double> d = new ArrayList<Double>();
 		//Set current location
 		GeoPoint p = myLocation.getCurLocation();
 		Location here = new Location("");
@@ -51,69 +69,29 @@ public class DistanceCalculator implements ListAdapter
             ParkingLot lot = parkingDb.queryParkingById(i);    
         	location.setLatitude(lot.getLatitude() * 1.0E-6);
             location.setLongitude(lot.getLongtitude() * 1.0E-6);
-            distances.add((double)here.distanceTo(location)); //in meter
+            d.add((double)here.distanceTo(location)); //in meter
         }
-
-	}
-
-	public boolean areAllItemsEnabled() 
-	{
-		return false;
-	}
-
-	public boolean isEnabled(int position) 
-	{
-		return false;
-	}
-
-	public int getCount() 
-	{
-		return TOTAL_LOT_NUM;
-	}
-
-	public Object getItem(int position) 
-	{
-		return null;
-	}
-
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getItemViewType(int position) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int getViewTypeCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public boolean hasStableIds() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void registerDataSetObserver(DataSetObserver observer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void unregisterDataSetObserver(DataSetObserver observer) {
-		// TODO Auto-generated method stub
-		
+        
+    	CharSequence[] distances = new CharSequence[TOTAL_LOT_NUM];
+    	d.toArray(distances);
+        
+        return distances;
 	}
 	
+	public View getView(int position, View convertView, ViewGroup parent) 
+	{
+			LayoutInflater inflater=LayoutInflater.from(context);
+			View distancemenu=inflater.inflate(R.layout.distancemenu, parent, false);
+
+			TextView name=(TextView)distancemenu.findViewById(R.id.name);
+	    	CharSequence[] name_text = getLotName();
+			name.setText(name_text[position]);
+			
+			TextView distance=(TextView)distancemenu.findViewById(R.id.distance);
+	    	CharSequence[] distance_text = calculateDistance();
+	    	distance.setText(distance_text[position]);
+
+			return(distancemenu);
+	}
+
 }
