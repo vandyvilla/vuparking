@@ -15,7 +15,7 @@
 
 5th Bi-weekly build cycle user stories:
   * User can mark current location and compute sorted distances to all available parking spots shown on map. (Yuan) 
-  * User can modify display settings, including (1) parking lots with no available spots shown or not; (2) use time policy filter or not; (3) available spots for people needing special help shown or not; (4) switch between map view and street view; (Xiaowei)
+  * User can modify display settings, including (1) parking lots with no available spots shown or not; (2) use time policy filter or not; (3) available spots for people needing special help shown or not; (4) display zone area or not; (Xiaowei)
 
 4th Bi-weekly build cycle user stories:
   * User can refresh (update) the number of available parking lots of all parking zones.
