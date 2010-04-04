@@ -19,6 +19,7 @@
 package edu.vanderbilt.android.vuparking;
 
 import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -62,44 +63,50 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	{
 		return mOverlays.get(i);
 	}
+	
+	public void drawMarker(int zone)
+	{
+		if (parkingDb.openDB())
+		{
+			ArrayList<ParkingLot> lots = parkingDb.queryParkingZone(zone);
+			for (int j = 0; j < lots.size(); j++)
+			{
+				if (map.settings[0] == false && lots.get(j).getNumAvailabe() == 0)   // Filter out non-available spots
+					continue;
+				double lat = lots.get(j).getLatitude();
+				double lng = lots.get(j).getLongtitude();
+				GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+				OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
+				// Display handicapped marker
+				if (map.settings[2] == true)
+				{
+					if (lots.get(j).getNumDisable() != 0)
+					{
+						Drawable handiMarker = boundCenterBottom(mContext.getResources().getDrawable(R.drawable.wheel_chair));
+						overlay.setMarker(handiMarker);
+						addOverlay(overlay);
+					}
+				}
+				else
+				{
+					int zoneNum = lots.get(j).getZone();
+					Drawable marker = boundCenterBottom(mContext.getResources().getDrawable(markers[zoneNum]));
+					overlay.setMarker(marker);
+					addOverlay(overlay);
+				}
+			}
+		}
+		else Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
+	}
 
 	// Query database to add all parking markers on map.
 	public void addAllOverlayItems() 
 	{
-		if (parkingDb.openDB()) {
-			for (int i = 0; i < num_areas; i++)
-				if (map.zoneToDisplay[i]) 
-				{
-					ArrayList<ParkingLot> lots = parkingDb.queryParkingZone(i);
-					for (int j = 0; j < lots.size(); j++)
-					{
-						if (map.settings[0] == false && lots.get(j).getNumAvailabe() == 0)   // Filter out non-available spots
-							continue;
-						double lat = lots.get(j).getLatitude();
-						double lng = lots.get(j).getLongtitude();
-						GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
-						OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
-						// Display handicapped marker
-						if (map.settings[2] == true)
-						{
-							if (lots.get(j).getNumDisable() != 0)
-							{
-								Drawable handiMarker = boundCenterBottom(mContext.getResources().getDrawable(R.drawable.wheel_chair));
-								overlay.setMarker(handiMarker);
-								addOverlay(overlay);
-							}
-						}
-						else
-						{
-							int zone = lots.get(j).getZone();
-							Drawable marker = boundCenterBottom(mContext.getResources().getDrawable(markers[zone]));
-							overlay.setMarker(marker);
-							addOverlay(overlay);
-						}						
-					}
-				}	
+		for (int i = 0; i < num_areas; i++)
+		{
+			if (map.zoneOnMap[i])
+				drawMarker(i);
 		}
-		else Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
 	}
 	
 	// Define the action when click on the marker to show detailed information.
