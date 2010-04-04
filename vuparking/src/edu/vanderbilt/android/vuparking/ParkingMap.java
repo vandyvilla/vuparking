@@ -18,6 +18,8 @@
 
 package edu.vanderbilt.android.vuparking;
 
+import java.util.Calendar;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -68,7 +70,6 @@ public class ParkingMap extends MapActivity
 
 		myLocation = new LocationOverlay(this, mv);
 		myLocation.enableMyLocation();      // Start receiving GPS signal.
-
 		addAllOverlay();
 	}
 
@@ -82,16 +83,23 @@ public class ParkingMap extends MapActivity
 	// Add zone color, markers onto map view.
 	private void addAllOverlay() 
 	{
-		//ZoneOverlay zOverlay = new ZoneOverlay(this);
-		//addOverlay(zOverlay);
-
+		if (settings[1] == true)   // Time policy.
+		{
+			Calendar calendar = Calendar.getInstance();
+			Toast.makeText(this, "Current hour is: " + calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+		}
+		if (settings[3] == true)   // Add zone areas.
+		{
+			ZoneOverlay zOverlay = new ZoneOverlay(this);
+			addOverlay(zOverlay);
+		}
 		MarkerOverlay mOverlay = new MarkerOverlay(this,this);
 		addOverlay(mOverlay);
 	}
 
 	// Refresh all overlays on map.
 	private void refreshOverlay() 
-	{
+	{		
 		mv.getOverlays().clear();
 		addAllOverlay();
 	}
@@ -177,7 +185,7 @@ public class ParkingMap extends MapActivity
 			});
 			break;
 		case MENU_SETTINGS:
-			CharSequence[] settingItem = {"Include fully occupied lots", "Apply time policy", "Show handicapped spots", "Switch to street view"};
+			CharSequence[] settingItem = {"Include full lots", "Apply time policy", "Show handicapped spots", "Display zone areas"};
 			builder.setTitle("Settings");
 			builder.setMultiChoiceItems(settingItem, settings, new DialogInterface.OnMultiChoiceClickListener() 
 			{
@@ -192,7 +200,7 @@ public class ParkingMap extends MapActivity
 				{
 					dialog.dismiss();
 				}
-			});			
+			});
 
 			builder.setPositiveButton("Done", new DialogInterface.OnClickListener() 
 			{

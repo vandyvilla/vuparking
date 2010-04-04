@@ -75,26 +75,26 @@ public class ParkingDBManager
 	// Initialization of ParkingLot Database with Static information.
 	public void loadParkingData()
 	{
-		lots.add(new ParkingLot(1, LOT, ZONE1, "Magnolia lawn", "", 36.142773, -86.798635, 20, 15, 5, 0));
-        lots.add(new ParkingLot(2, LOT, ZONE1, "English Language Center", "1226 18th Ave S", 36.141802, -86.795685, 50, 40, 10, 0));
-        lots.add(new ParkingLot(3, LOT, ZONE1, "Wyatt Center", "", 36.139834, -86.798586, 50, 40, 10, 0));
-        lots.add(new ParkingLot(4, LOT, ZONE2, "Baker building", "118 21st Ave S", 36.149334, -86.799635, 100, 80, 20, 0));
-        lots.add(new ParkingLot(5, LOT, ZONE2, "West End Ave", "", 36.149472, -86.802467, 20, 15, 5, 0));
-        lots.add(new ParkingLot(6, LOT, ZONE2, "Law School", "Scarritt Pl", 36.148222, -86.800073, 50, 40, 10, 0));
+		lots.add(new ParkingLot(1, LOT, ZONE1, "Magnolia lawn", "", 36.142773, -86.798635, 15, 15, 5, 0));
+        lots.add(new ParkingLot(2, LOT, ZONE1, "English Language Center", "1226 18th Ave S", 36.141802, -86.795685, 40, 40, 10, 0));
+        lots.add(new ParkingLot(3, LOT, ZONE1, "Wyatt Center", "", 36.139834, -86.798586, 40, 40, 10, 0));
+        lots.add(new ParkingLot(4, LOT, ZONE2, "Baker building", "118 21st Ave S", 36.149334, -86.799635, 80, 80, 10, 0));
+        lots.add(new ParkingLot(5, LOT, ZONE2, "West End Ave", "", 36.149472, -86.802467, 15, 15, 5, 0));
+        lots.add(new ParkingLot(6, LOT, ZONE2, "Law School", "Scarritt Pl", 36.148222, -86.800073, 40, 40, 10, 0));
         lots.add(new ParkingLot(7, LOT, ZONE3, "Olin hall", "2400 Highland Ave", 36.142937, -86.805072, 20, 20, 0, 0));
-        lots.add(new ParkingLot(8, GARAGE, ZONE3, "25th Ave Staff garage", "2499 Highland Ave", 36.142365, -86.806124, 100, 80, 20, 0));
-        lots.add(new ParkingLot(9, GARAGE, ZONE3, "Kensington Garage", "", 36.147163,-86.807613, 20, 20, 0, 0));
-        lots.add(new ParkingLot(10, LOT, ZONE3, "Parmer Field House", "", 36.145984,-86.808558, 20, 20, 80, 0));        
-        lots.add(new ParkingLot(11, LOT, ZONE4, "Blakemore Ave", "2140 Belcourt Ave", 36.137401, -86.804236, 20, 20, 0, 0));
-        lots.add(new ParkingLot(12, LOT, ZONE4, "Real Estate", "2189-2199 Belcourt Ave", 36.136956,-86.805073, 20, 20, 0, 0));
-        lots.add(new ParkingLot(13, LOT, MEDICAL, "Natchez field", "2964 Dudley Ave", 36.141120, -86.812059, 100, 80, 20, 0));
-        lots.add(new ParkingLot(14, GARAGE, MEDICAL, "Central garage", "2401 Highland Ave", 36.141924,-86.805909, 100, 80, 20, 0));
-        lots.add(new ParkingLot(15, GARAGE, MEDICAL, "South garage", "2376 Children's Way", 36.139454,-86.804375, 100, 80, 20, 0));
-        lots.add(new ParkingLot(16, GARAGE, MEDICAL, "Medical center East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 100, 80, 20, 0));
-        lots.add(new ParkingLot(17, GARAGE, MEDICAL, "Vanderbilt Clinic garage", "1499 21st Ave S", 36.140381, -86.800899, 100, 80, 20, 0));
-        lots.add(new ParkingLot(18, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 50, 40, 10, 0.75));
+        lots.add(new ParkingLot(8, GARAGE, ZONE3, "25th Ave Staff garage", "2499 Highland Ave", 36.142365, -86.806124, 80, 80, 20, 0));
+        lots.add(new ParkingLot(9, GARAGE, ZONE3, "Kensington Garage", "", 36.147163,-86.807613, 20, 20, 5, 0));
+        lots.add(new ParkingLot(10, LOT, ZONE3, "Parmer Field House", "", 36.145984,-86.808558, 20, 20, 0, 0));
+        lots.add(new ParkingLot(11, LOT, ZONE4, "Blakemore Ave", "2140 Belcourt Ave", 36.137401, -86.804236, 20, 20, 5, 0));
+        lots.add(new ParkingLot(12, LOT, ZONE4, "Real Estate", "2189-2199 Belcourt Ave", 36.136956,-86.805073, 20, 20, 5, 0));
+        lots.add(new ParkingLot(13, LOT, MEDICAL, "Natchez field", "2964 Dudley Ave", 36.141120, -86.812059, 80, 80, 10, 0));
+        lots.add(new ParkingLot(14, GARAGE, MEDICAL, "Central garage", "2401 Highland Ave", 36.141924,-86.805909, 80, 80, 10, 0));
+        lots.add(new ParkingLot(15, GARAGE, MEDICAL, "South garage", "2376 Children's Way", 36.139454,-86.804375, 80, 80, 10, 0));
+        lots.add(new ParkingLot(16, GARAGE, MEDICAL, "Medical center East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 80, 80, 10, 0));
+        lots.add(new ParkingLot(17, GARAGE, MEDICAL, "Vanderbilt Clinic garage", "1499 21st Ave S", 36.140381, -86.800899, 80, 80, 10, 0));
+        lots.add(new ParkingLot(18, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 40, 40, 5, 0.75));
         lots.add(new ParkingLot(19, LOT, VISITOR, "Planet beach", "2099 Scarritt Pl", 36.145770, -86.799182, 20, 20, 0, 0.75));
-        lots.add(new ParkingLot(20, LOT, VISITOR, "Jess Neely Dr", "", 36.143333,-86.807935, 20, 20, 0, 0.75));
+        lots.add(new ParkingLot(20, LOT, VISITOR, "Jess Neely Dr", "", 36.143333,-86.807935, 15, 15, 5, 0.75));
 	}
 
 	// Query the database for parking lot by id.

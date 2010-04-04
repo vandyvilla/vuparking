@@ -81,9 +81,13 @@ class ZoneOverlay extends com.google.android.maps.Overlay
 
 		// Zone 4;
 		ArrayList<coordinate> pt4 = new ArrayList<coordinate>();
+		pt4.add(new coordinate(36138013,-86804802));
+		pt4.add(new coordinate(36136736,-86805192));
+		pt4.add(new coordinate(36136563,-86802746));
+		pt4.add(new coordinate(36137724,-86802639));
 		ZonePt.add(pt4);
 
-		// Medical;
+		// Medical-part1;
 		ArrayList<coordinate> pt5 = new ArrayList<coordinate>();
 		pt5.add(new coordinate(36138013,-86804802));
 		pt5.add(new coordinate(36144044,-86803730));
@@ -91,43 +95,59 @@ class ZoneOverlay extends com.google.android.maps.Overlay
 		pt5.add(new coordinate(36137597,-86800640));
 		ZonePt.add(pt5);
 
-		// Visitor;
-		ArrayList<coordinate> pt6 = new ArrayList<coordinate>();
+		// Medical-part2;
+		ArrayList<coordinate> pt6 = new ArrayList<coordinate>();		
+		pt6.add(new coordinate(36142806,-86810195));
+		pt6.add(new coordinate(36138925,-86810882));
+		pt6.add(new coordinate(36139341,-86812642));
+		pt6.add(new coordinate(36141247,-86814101));
 		ZonePt.add(pt6);
+	}
+	
+	public void drawArea(Canvas canvas, MapView mv, int zone)
+	{
+		int opaque = 50; // 0: transparent, 255: black
+		int[] color = {Color.YELLOW, Color.CYAN, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.MAGENTA};
+		
+		Path path = new Path();
+		Point pt = new Point();
+		mv.getProjection().toPixels(new GeoPoint(ZonePt.get(zone).get(0).getX(),ZonePt.get(zone).get(0).getY()), pt);
+		path.moveTo(pt.x, pt.y);
+
+		for (int j = 1; j < ZonePt.get(zone).size(); j++)
+		{
+			mv.getProjection().toPixels(new GeoPoint(ZonePt.get(zone).get(j).getX(),ZonePt.get(zone).get(j).getY()), pt);
+			path.lineTo(pt.x, pt.y);
+		}			
+		Paint paint = new Paint();
+		paint.setColor(color[zone]);
+		paint.setAlpha(opaque);
+		paint.setStyle(Paint.Style.FILL);
+		canvas.drawPath(path, paint);
 	}
 
 	// Draw polygon with color on specific zones.
 	public boolean draw (Canvas canvas, MapView mv, boolean shadow, long when) 
 	{
 		super.draw(canvas, mv, shadow);
-		int opaque = 50; // 0: transparent, 255: black
-		int[] color = {Color.YELLOW, Color.CYAN, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.TRANSPARENT};
 
 		loadZoneTopo();
 
 		for (int i=0; i < num_areas; i++) 
+		{
+			if (i == 4 && map.zoneToDisplay[i])
+			{
+				drawArea(canvas, mv, 4);    // Medical zone has two areas.
+				drawArea(canvas, mv, 5);
+				continue;
+			}
+			if (i == 5)      // Visitor doesn't have a zone area.
+				continue;
 			if (map.zoneToDisplay[i]) 
 			{
-				Path path = new Path();
-				if (ZonePt.get(i).size() != 0)
-				{
-					Point pt = new Point();
-					mv.getProjection().toPixels(new GeoPoint(ZonePt.get(i).get(0).getX(),ZonePt.get(i).get(0).getY()), pt);
-					path.moveTo(pt.x, pt.y);
-
-					for (int j = 1; j < ZonePt.get(i).size(); j++)
-					{
-						mv.getProjection().toPixels(new GeoPoint(ZonePt.get(i).get(j).getX(),ZonePt.get(i).get(j).getY()), pt);
-						path.lineTo(pt.x, pt.y);
-					}
-				}
-				Paint paint = new Paint();
-				paint.setColor(color[i]);
-				paint.setAlpha(opaque);
-				paint.setStyle(Paint.Style.FILL);
-				canvas.drawPath(path, paint);
+				drawArea(canvas, mv, i);
 			}
-
+		}
 		return true;
 	}
 }
