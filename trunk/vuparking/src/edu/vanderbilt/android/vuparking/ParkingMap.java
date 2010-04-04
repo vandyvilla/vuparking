@@ -37,8 +37,10 @@ import edu.vanderbilt.android.vuparking.network.ParkingClient;
 
 public class ParkingMap extends MapActivity 
 {
+	private final static int num_zones = 6;
 	private static MapView mv;
 	public boolean[] zoneToDisplay;
+	public boolean[] zoneOnMap = {false, false, false, false, false, false};
 	public boolean[] settings = {false, false, false, false};
 
 	private LocationOverlay myLocation;
@@ -48,6 +50,9 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_CURLOC = 1;	//current location
 	private final static int MENU_REFRESH = 2;  //refresh parking information
 	private final static int MENU_SETTINGS = 3; //settings
+	
+	private static final int HOUR_UP = 6;
+	private static final int HOUR_DN = 16;
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -83,10 +88,25 @@ public class ParkingMap extends MapActivity
 	// Add zone color, markers onto map view.
 	private void addAllOverlay() 
 	{
-		if (settings[1] == true)   // Time policy.
+		for (int i = 0; i < num_zones; i++)
+		{
+			zoneOnMap[i] = zoneToDisplay[i];
+		}
+		if (settings[1] == true)     // Applying time policy.
 		{
 			Calendar calendar = Calendar.getInstance();
+			int hour = calendar.getTime().getHours();
 			Toast.makeText(this, "Current hour is: " + calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+			if (zoneToDisplay[0] || zoneToDisplay[1] || zoneToDisplay[2] || zoneToDisplay[3])
+			{
+				if (hour >= HOUR_DN || hour <= HOUR_UP)
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						zoneOnMap[j] = true;
+					}
+				}
+			}
 		}
 		if (settings[3] == true)   // Add zone areas.
 		{

@@ -135,7 +135,7 @@ class ZoneOverlay extends com.google.android.maps.Overlay
 
 		for (int i=0; i < num_areas; i++) 
 		{
-			if (i == 4 && map.zoneToDisplay[i])
+			if (i == 4 && map.zoneOnMap[i])
 			{
 				drawArea(canvas, mv, 4);    // Medical zone has two areas.
 				drawArea(canvas, mv, 5);
@@ -143,7 +143,7 @@ class ZoneOverlay extends com.google.android.maps.Overlay
 			}
 			if (i == 5)      // Visitor doesn't have a zone area.
 				continue;
-			if (map.zoneToDisplay[i]) 
+			if (map.zoneOnMap[i]) 
 			{
 				drawArea(canvas, mv, i);
 			}

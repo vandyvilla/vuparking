@@ -63,7 +63,20 @@ class LocationOverlay extends MyLocationOverlay
 		Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.loc);
 		canvas.drawBitmap(bmp, screenPts.x-16, screenPts.y-32, null);
 		return true;
+	}	
+	/*
+	@Override
+	public boolean onTap(GeoPoint point, MapView mapView)
+	{
+		Toast.makeText(mContext, "Show distances", Toast.LENGTH_SHORT);
+		return false;
 	}
+	
+	protected boolean dispatchTap()
+	{
+		Toast.makeText(mContext, "Show distances", Toast.LENGTH_SHORT);
+		return true;
+	}*/
 
 	public void onLocationChanged() 
 	{
