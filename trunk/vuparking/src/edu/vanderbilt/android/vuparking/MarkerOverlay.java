@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -72,13 +73,29 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 					ArrayList<ParkingLot> lots = parkingDb.queryParkingZone(i);
 					for (int j = 0; j < lots.size(); j++)
 					{
+						if (map.settings[0] == false && lots.get(j).getNumAvailabe() == 0)   // Filter out non-available spots
+							continue;
 						double lat = lots.get(j).getLatitude();
 						double lng = lots.get(j).getLongtitude();
 						GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
 						OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
-						int zone = lots.get(j).getZone();
-						overlay.setMarker(boundCenterBottom(mContext.getResources().getDrawable(markers[zone])));
-						addOverlay(overlay);
+						// Display handicapped marker
+						if (map.settings[2] == true)
+						{
+							if (lots.get(j).getNumDisable() != 0)
+							{
+								Drawable handiMarker = boundCenterBottom(mContext.getResources().getDrawable(R.drawable.wheel_chair));
+								overlay.setMarker(handiMarker);
+								addOverlay(overlay);
+							}
+						}
+						else
+						{
+							int zone = lots.get(j).getZone();
+							Drawable marker = boundCenterBottom(mContext.getResources().getDrawable(markers[zone]));
+							overlay.setMarker(marker);
+							addOverlay(overlay);
+						}						
 					}
 				}	
 		}
@@ -99,11 +116,23 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		if (parkingDb.openDB()) 
 		{
 			ParkingLot p = parkingDb.queryParkingById(lotId);
-			dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
-					          "\nZone: " + ZONES[p.getZone()] +
-					          "\nAddress: " + p.getAddress() +
-						      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-						      "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
+			if (map.settings[2] == true)
+			{
+				dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
+				          "\nZone: " + ZONES[p.getZone()] +
+				          "\nAddress: " + p.getAddress() +
+					      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+					      "\nDisable Spots: " + Integer.toString(p.getNumDisable()));
+			}
+			else
+			{
+				dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
+				          "\nZone: " + ZONES[p.getZone()] +
+				          "\nAddress: " + p.getAddress() +
+					      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+					      "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
+			}
+			
 		}
 		else
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
