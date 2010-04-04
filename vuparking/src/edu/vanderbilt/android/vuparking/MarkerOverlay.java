@@ -39,6 +39,9 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	private Context mContext;
 	ParkingMap map;
 	
+	private final static int FULLSPOT = 0;
+	private final static int DISABLE = 2;
+	
 	private Integer[] markers = { R.drawable.yellow, R.drawable.lightblue, R.drawable.green, R.drawable.red, R.drawable.pink, R.drawable.orange};
 	
 	public MarkerOverlay(ParkingMap parkingmap, Context context) 
@@ -71,14 +74,14 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 			ArrayList<ParkingLot> lots = parkingDb.queryParkingZone(zone);
 			for (int j = 0; j < lots.size(); j++)
 			{
-				if (map.settings[0] == false && lots.get(j).getNumAvailabe() == 0)   // Filter out non-available spots
+				if (map.settings[FULLSPOT] == false && lots.get(j).getNumAvailabe() == 0)   // Filter out non-available spots
 					continue;
 				double lat = lots.get(j).getLatitude();
 				double lng = lots.get(j).getLongtitude();
 				GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
 				OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
 				// Display handicapped marker
-				if (map.settings[2] == true)
+				if (map.settings[DISABLE] == true)
 				{
 					if (lots.get(j).getNumDisable() != 0)
 					{
@@ -105,7 +108,9 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		for (int i = 0; i < num_areas; i++)
 		{
 			if (map.zoneOnMap[i])
+			{
 				drawMarker(i);
+			}				
 		}
 	}
 	
@@ -128,16 +133,16 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 				dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
 				          "\nZone: " + ZONES[p.getZone()] +
 				          "\nAddress: " + p.getAddress() +
-					      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-					      "\nDisable Spots: " + Integer.toString(p.getNumDisable()));
+				          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+				          "\nDisable Spots: " + Integer.toString(p.getNumDisable()));
 			}
 			else
 			{
 				dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
 				          "\nZone: " + ZONES[p.getZone()] +
 				          "\nAddress: " + p.getAddress() +
-					      "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-					      "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
+				          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+				          "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
 			}
 			
 		}

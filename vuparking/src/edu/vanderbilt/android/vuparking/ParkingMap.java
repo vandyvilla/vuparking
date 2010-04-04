@@ -37,11 +37,11 @@ import edu.vanderbilt.android.vuparking.network.ParkingClient;
 
 public class ParkingMap extends MapActivity 
 {
-	private final static int num_zones = 6;
+	private final static int num_zones = 6;   // Number of zones.
 	private static MapView mv;
-	public boolean[] zoneToDisplay;
-	public boolean[] zoneOnMap = {false, false, false, false, false, false};
-	public boolean[] settings = {false, false, false, false};
+	public boolean[] zoneToDisplay;    // Record user zone choices.
+	public boolean[] zoneOnMap = {false, false, false, false, false, false}; // Record zones shown on map.
+	public boolean[] settings = {false, false, false, false};    // Record user setting choices.
 
 	private LocationOverlay myLocation;
 	private int zoomLevel;
@@ -51,8 +51,11 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_REFRESH = 2;  //refresh parking information
 	private final static int MENU_SETTINGS = 3; //settings
 	
-	private static final int HOUR_UP = 6;
-	private static final int HOUR_DN = 16;
+	private final static int TIMEPOLICY = 1;
+	private final static int ZONECOLOR = 3;
+	
+	private static final int HOUR_UP = 6;      // Morning limit of time policy.
+	private static final int HOUR_DN = 16;     // Afternoon limit of time policy.
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -92,23 +95,23 @@ public class ParkingMap extends MapActivity
 		{
 			zoneOnMap[i] = zoneToDisplay[i];
 		}
-		if (settings[1] == true)     // Applying time policy.
+		if (settings[TIMEPOLICY] == true)     // Applying time policy.
 		{
 			Calendar calendar = Calendar.getInstance();
 			int hour = calendar.getTime().getHours();
-			Toast.makeText(this, "Current hour is: " + calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "Current hour is: " + calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
 			if (zoneToDisplay[0] || zoneToDisplay[1] || zoneToDisplay[2] || zoneToDisplay[3])
 			{
 				if (hour >= HOUR_DN || hour <= HOUR_UP)
 				{
-					for (int j = 0; j < 4; j++)
+					for (int j = 0; j < num_zones-2; j++)
 					{
-						zoneOnMap[j] = true;
+						zoneOnMap[j] = true;    // Display all four zones if not working hours.
 					}
 				}
 			}
 		}
-		if (settings[3] == true)   // Add zone areas.
+		if (settings[ZONECOLOR] == true)   // Add zone area colors.
 		{
 			ZoneOverlay zOverlay = new ZoneOverlay(this);
 			addOverlay(zOverlay);
@@ -205,7 +208,7 @@ public class ParkingMap extends MapActivity
 			});
 			break;
 		case MENU_SETTINGS:
-			CharSequence[] settingItem = {"Include full lots", "Apply time policy", "Show handicapped spots", "Display zone areas"};
+			CharSequence[] settingItem = {"Include full occupied lots", "Apply time policy", "Show handicapped spots", "Display zone areas"};
 			builder.setTitle("Settings");
 			builder.setMultiChoiceItems(settingItem, settings, new DialogInterface.OnMultiChoiceClickListener() 
 			{
@@ -227,7 +230,7 @@ public class ParkingMap extends MapActivity
 				public void onClick(DialogInterface dialog, int which) 
 				{
 					dialog.dismiss();
-					refreshOverlay();          // Refresh all the overlay items on map.
+					refreshOverlay();          // Refresh based on user settings.
 				}
 			});
 			break;
