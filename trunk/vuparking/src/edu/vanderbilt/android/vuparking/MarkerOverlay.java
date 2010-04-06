@@ -32,12 +32,12 @@ import com.google.android.maps.OverlayItem;
 
 public class MarkerOverlay extends ItemizedOverlay<OverlayItem> 
 {
-
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private ParkingDBManager parkingDb = new ParkingDBManager();    // Access local database.
 	private int num_areas = 6;
 	private Context mContext;
 	ParkingMap map;
+	public ArrayList<ParkingLot> lotMarkers;
 	
 	private final static int FULLSPOT = 0;
 	private final static int DISABLE = 2;
@@ -46,10 +46,17 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	
 	public MarkerOverlay(ParkingMap parkingmap, Context context) 
 	{
-		super(boundCenterBottom(context.getResources().getDrawable(R.drawable.parking)));
+		super(boundCenterBottom(context.getResources().getDrawable(R.drawable.parkinglot)));
 		mContext = context;
 		map = parkingmap;
-		// Get corresponding parking lots information for each selected zone from Database.
+		lotMarkers = new ArrayList<ParkingLot>();
+	}
+	
+	// Get corresponding parking lots information for each selected zone from Database.
+	public void refreshOverlay()
+	{
+		mOverlays.clear();
+		lotMarkers.clear();
 		addAllOverlayItems();
 	}
 
@@ -88,14 +95,17 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 						Drawable handiMarker = boundCenterBottom(mContext.getResources().getDrawable(R.drawable.wheel_chair));
 						overlay.setMarker(handiMarker);
 						addOverlay(overlay);
+						lotMarkers.add(lots.get(j));
 					}
 				}
 				else
 				{
 					int zoneNum = lots.get(j).getZone();
 					Drawable marker = boundCenterBottom(mContext.getResources().getDrawable(markers[zoneNum]));
+					//Toast.makeText(mContext, marker.getBounds().width() + marker.getBounds().height(), Toast.LENGTH_SHORT);
 					overlay.setMarker(marker);
 					addOverlay(overlay);
+					lotMarkers.add(lots.get(j));
 				}
 			}
 		}
@@ -110,7 +120,7 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 			if (map.zoneOnMap[i])
 			{
 				drawMarker(i);
-			}				
+			}
 		}
 	}
 	
@@ -134,7 +144,7 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 				          "\nZone: " + ZONES[p.getZone()] +
 				          "\nAddress: " + p.getAddress() +
 				          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-				          "\nDisable Spots: " + Integer.toString(p.getNumDisable()));
+				          "\nHandicapped Spots: " + Integer.toString(p.getNumDisable()));
 			}
 			else
 			{
@@ -143,8 +153,7 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 				          "\nAddress: " + p.getAddress() +
 				          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
 				          "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
-			}
-			
+			}			
 		}
 		else
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
