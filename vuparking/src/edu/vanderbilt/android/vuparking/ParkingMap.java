@@ -42,7 +42,6 @@ public class ParkingMap extends MapActivity
 {
 	private final static int num_zones = 6;   // Number of zones.
 	private static MapView mv;
-	public boolean[] zoneToDisplay;    // Record user zone choices.
 	public boolean[] zoneOnMap = {false, false, false, false, false, false}; // Record zones shown on map.
 	public boolean[] settings = {false, false, false, false};    // Record user setting choices.
 
@@ -76,10 +75,6 @@ public class ParkingMap extends MapActivity
 		mv = (MapView) findViewById(R.id.map);
 		mv.setBuiltInZoomControls(true);     // For zoom in/out.
 
-		// Get user choices from main activity.
-		Bundle bundle = this.getIntent().getExtras();
-		zoneToDisplay = bundle.getBooleanArray("zoneChoices");
-
 		// Set default map center and zoom level.
 		zoomLevel = 15;
 		GeoPoint p = new GeoPoint((int)(36141710),(int)(-86803669));
@@ -107,14 +102,15 @@ public class ParkingMap extends MapActivity
 	{
 		for (int i = 0; i < num_zones; i++)
 		{
-			zoneOnMap[i] = zoneToDisplay[i];
+			zoneOnMap[i] = Main.zoneChoices[i];
 		}
 		if (settings[TIMEPOLICY] == true)     // Applying time policy.
 		{
+			String TimePolicy = "Between 4pm and 7am next day, you can park at either zone from ZONE1 to ZONE4 if you have a permit.";
+			Toast.makeText(this, TimePolicy, Toast.LENGTH_LONG).show(); 
 			Calendar calendar = Calendar.getInstance();
 			int hour = calendar.getTime().getHours();
-			//Toast.makeText(this, "Current hour is: " + calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
-			if (zoneToDisplay[0] || zoneToDisplay[1] || zoneToDisplay[2] || zoneToDisplay[3])
+			if (Main.zoneChoices[0] || Main.zoneChoices[1] || Main.zoneChoices[2] || Main.zoneChoices[3])
 			{
 				if (hour >= HOUR_DN || hour <= HOUR_UP)
 				{
@@ -245,10 +241,10 @@ public class ParkingMap extends MapActivity
 		case MENU_ZONE:
 			CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical", "Visitor"};
 			builder.setTitle("Please pick your zones");
-			builder.setMultiChoiceItems(zones, zoneToDisplay, new DialogInterface.OnMultiChoiceClickListener() 
+			builder.setMultiChoiceItems(zones, Main.zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					zoneToDisplay[which] = isChecked;
+					Main.zoneChoices[which] = isChecked;
 				}
 			});
 			
@@ -312,7 +308,6 @@ public class ParkingMap extends MapActivity
 					dialog.dismiss();
 				}
 			});
-
 			break;
 		}
 		return builder.create();

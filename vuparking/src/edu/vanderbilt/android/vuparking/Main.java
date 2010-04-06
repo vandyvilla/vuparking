@@ -34,7 +34,9 @@ public class Main extends Activity
 	public static Context appContext;
 
 	private static final int TOTAL_ZONE=6; //Zone1, Zone2, Zone3, Zone4, Medical, Visitor.
-	private static boolean[] zoneChoices=new boolean[TOTAL_ZONE]; //Record user's zone choices
+	private final static int MENU_ZONE = 0;	
+
+	public static boolean[] zoneChoices=new boolean[TOTAL_ZONE]; //Record user's zone choices, Shared variables.
 
 	// Entry point for the application.
 	@Override
@@ -53,7 +55,7 @@ public class Main extends Activity
 		{
 			public void onClick(View v)
 			{
-				showDialog(0);         // pop up dialog for choosing zones.
+				showDialog(MENU_ZONE);         // pop up dialog for choosing zones.
 			}
 		});
 
@@ -74,50 +76,61 @@ public class Main extends Activity
 	private void toMapView()
 	{
 		Intent toMap = new Intent(this, ParkingMap.class);
-		Bundle bundle = new Bundle();
-		bundle.putBooleanArray("zoneChoices", zoneChoices);
-		toMap.putExtras(bundle);
 		startActivity(toMap);
 	}
 
 	// Create 'Zone Selection' dialog
+	@Override
 	protected Dialog onCreateDialog(int id)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical"};
-		builder.setTitle("Please pick your zones");
-		builder.setMultiChoiceItems(zones, zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
-		{			
-			public void onClick(DialogInterface dialog, int which, boolean isChecked) 
-			{
-				zoneChoices[TOTAL_ZONE-1] = false;
-				zoneChoices[which] = isChecked;
-			}
-		});
-
-		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
-		{			
-			public void onClick(DialogInterface dialog, int which)
-			{
-				dialog.dismiss();
-				toMapView();
-			}
-		});
-
-		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+		switch(id)
 		{
-			public void onClick(DialogInterface dialog, int which) 
+		case MENU_ZONE:			
+			CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical"};
+			builder.setTitle("Please pick your zones");
+		
+			builder.setMultiChoiceItems(zones, zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
+			{			
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) 
+				{
+					zoneChoices[which] = isChecked;
+				}
+			});
+
+			builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
+			{			
+				public void onClick(DialogInterface dialog, int which)
+				{
+					zoneChoices[TOTAL_ZONE-1] = false;
+					dialog.dismiss();
+					toMapView();
+				}
+			});
+
+			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
 			{
-				dialog.dismiss();
-			}
-		});
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+				}
+			});
+			break;
+		}
 		return builder.create();
 	}
 
 	// Set the item checked which are chosen last time.
-	protected void onPrepareDialog(Dialog dialog)
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog)
 	{
-		for (int i = 0; i < TOTAL_ZONE-1; i++)
-			((AlertDialog) dialog).getListView().setItemChecked(i, zoneChoices[i]);
+		switch (id)
+		{
+		case MENU_ZONE:
+			((AlertDialog) dialog).getListView().clearChoices();
+			for (int i = 0; i < TOTAL_ZONE-1; i++)
+				((AlertDialog) dialog).getListView().setItemChecked(i, zoneChoices[i]);
+			break;
+		}		
 	}
 }
