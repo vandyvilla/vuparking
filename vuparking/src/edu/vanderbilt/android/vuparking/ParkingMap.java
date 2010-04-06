@@ -304,6 +304,15 @@ public class ParkingMap extends MapActivity
                 	dialog.dismiss();
                 	markLot(which);
                 }});
+	        
+	        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+				}
+			});
+
 			break;
 		}
 		return builder.create();
