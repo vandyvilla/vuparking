@@ -58,8 +58,8 @@ public class ParkingMap extends MapActivity
 	private final static int TIMEPOLICY = 1;
 	private final static int ZONECOLOR = 3;
 	
-	private static final int HOUR_UP = 6;      // Morning limit of time policy.
-	private static final int HOUR_DN = 16;     // Afternoon limit of time policy.
+	public int hour_up = 6;      // Morning limit of time policy.
+	public int hour_dn = 16;     // Afternoon limit of time policy.
 	
     public DistanceAdapter adapter;
     public MarkerOverlay mOverlay;
@@ -112,7 +112,7 @@ public class ParkingMap extends MapActivity
 			int hour = calendar.getTime().getHours();
 			if (Main.zoneChoices[0] || Main.zoneChoices[1] || Main.zoneChoices[2] || Main.zoneChoices[3])
 			{
-				if (hour >= HOUR_DN || hour <= HOUR_UP)
+				if (hour >= hour_dn || hour <= hour_up)
 				{
 					for (int j = 0; j < num_zones-2; j++)
 					{
@@ -173,7 +173,7 @@ public class ParkingMap extends MapActivity
 	}
 
 	// Refresh all overlays on map.
-	private void refreshOverlay() 
+	public void refreshOverlay() 
 	{		
 		mv.getOverlays().clear();
 		addAllOverlay();
@@ -266,7 +266,7 @@ public class ParkingMap extends MapActivity
 			});
 			break;
 		case MENU_SETTINGS:
-			CharSequence[] settingItem = {"Include full occupied lots", "Apply time policy", "Show handicapped spots", "Display zone areas"};
+			CharSequence[] settingItem = {"Include full occupied lots", "Show after hour parking", "Show handicapped spots", "Display zone areas"};
 			builder.setTitle("Settings");
 			builder.setMultiChoiceItems(settingItem, settings, new DialogInterface.OnMultiChoiceClickListener() 
 			{
