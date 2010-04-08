@@ -54,17 +54,17 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_SETTINGS = 3; //settings
 	private final static int MENU_DISCAL = 4;   //calculate distances
 	private final static int MENU_NULL = 5;     //blank
-	
+
 	private final static int TIMEPOLICY = 1;
 	private final static int ZONECOLOR = 3;
-	
+
 	public int hour_up = 6;      // Morning limit of time policy.
 	public int hour_dn = 16;     // Afternoon limit of time policy.
-	
-    public DistanceAdapter adapter;
-    public MarkerOverlay mOverlay;
-    public Location curLoc;
-    
+
+	public DistanceAdapter adapter;
+	public MarkerOverlay mOverlay;
+	public Location curLoc;
+
 	// Called when creating the activity to show map view.
 	@Override
 	public void onCreate (Bundle savedInstanceState) 
@@ -83,10 +83,10 @@ public class ParkingMap extends MapActivity
 		myLocation = new LocationOverlay(this, mv);
 		myLocation.enableMyLocation();      // Start receiving GPS signal.
 		curLoc = new Location("");
-		
+
 		mOverlay = new MarkerOverlay(this, this);
 		adapter = new DistanceAdapter(this, R.layout.list_item, this);
-		
+
 		addAllOverlay();
 	}
 
@@ -130,46 +130,46 @@ public class ParkingMap extends MapActivity
 		addOverlay(mOverlay);
 		refreshAdapter();
 	}
-	
+
 	// Criteria for ordering parking lots.
 	private final Comparator<ParkingLot> distanceComp = new Comparator<ParkingLot>()
 	{
 		public int compare(ParkingLot p1, ParkingLot p2) {
-    		Location loc1 = new Location("");
-            loc1.setLatitude(p1.getLatitude());
-            loc1.setLongitude(p1.getLongtitude());
-            Location loc2 = new Location("");
-            loc2.setLatitude(p2.getLatitude());
-            loc2.setLongitude(p2.getLongtitude());
-            if (curLoc.distanceTo(loc1) < curLoc.distanceTo(loc2))
-            {
-            	return -1;
-            }
-            else if (curLoc.distanceTo(loc1) == curLoc.distanceTo(loc2)) 
-            {
-            	return 0;
-            }
-            else return 1;
-        }
+			Location loc1 = new Location("");
+			loc1.setLatitude(p1.getLatitude());
+			loc1.setLongitude(p1.getLongtitude());
+			Location loc2 = new Location("");
+			loc2.setLatitude(p2.getLatitude());
+			loc2.setLongitude(p2.getLongtitude());
+			if (curLoc.distanceTo(loc1) < curLoc.distanceTo(loc2))
+			{
+				return -1;
+			}
+			else if (curLoc.distanceTo(loc1) == curLoc.distanceTo(loc2)) 
+			{
+				return 0;
+			}
+			else return 1;
+		}
 	};
-	
+
 	// Refresh distance calculation list
 	private void refreshAdapter()
 	{
 		if (mOverlay.lotMarkers.size() > 0)
 		{
-            // Get current location.
-            curLoc.setLatitude(myLocation.getCurLocation().getLatitudeE6()*1.0E-6);
-            curLoc.setLongitude(myLocation.getCurLocation().getLongitudeE6()*1.0E-6);
+			// Get current location.
+			curLoc.setLatitude(myLocation.getCurLocation().getLatitudeE6()*1.0E-6);
+			curLoc.setLongitude(myLocation.getCurLocation().getLongitudeE6()*1.0E-6);
 			Collections.sort(mOverlay.lotMarkers, distanceComp);
 			// Copy ordered parking lots.
 			adapter.clear();
-        	for (int i = 0; i < mOverlay.lotMarkers.size(); i++)
-        	{
-        		adapter.add(mOverlay.lotMarkers.get(i));
-        	}
-        	//adapter.notifyDataSetChanged();
-        }
+			for (int i = 0; i < mOverlay.lotMarkers.size(); i++)
+			{
+				adapter.add(mOverlay.lotMarkers.get(i));
+			}
+			//adapter.notifyDataSetChanged();
+		}
 	}
 
 	// Refresh all overlays on map.
@@ -231,7 +231,7 @@ public class ParkingMap extends MapActivity
 		}
 		return true;
 	}
-	
+
 	// Define the pop up dialog for choosing zones.
 	protected Dialog onCreateDialog(int id)
 	{		
@@ -243,11 +243,12 @@ public class ParkingMap extends MapActivity
 			builder.setTitle("Please pick your zones");
 			builder.setMultiChoiceItems(zones, Main.zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
 			{
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) 
+				{
 					Main.zoneChoices[which] = isChecked;
 				}
 			});
-			
+
 			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int which) 
@@ -270,11 +271,12 @@ public class ParkingMap extends MapActivity
 			builder.setTitle("Settings");
 			builder.setMultiChoiceItems(settingItem, settings, new DialogInterface.OnMultiChoiceClickListener() 
 			{
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) 
+				{
 					settings[which] = isChecked;
 				}
 			});
-			
+
 			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int which) 
@@ -294,14 +296,15 @@ public class ParkingMap extends MapActivity
 			break;
 		case MENU_DISCAL:
 			builder.setTitle("Distances from your current location");
-	        builder.setAdapter(adapter, new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int which) 
-                {
-                	dialog.dismiss();
-                	markLot(which);
-                }});
-	        
-	        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+			builder.setAdapter(adapter, new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+					markLot(which);
+				}});
+
+			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int which) 
 				{
@@ -312,7 +315,7 @@ public class ParkingMap extends MapActivity
 		}
 		return builder.create();
 	}
-	
+
 	// Highlight selected parking spot
 	public void markLot(int index)
 	{
