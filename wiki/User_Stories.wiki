@@ -13,6 +13,14 @@
   * Users can rate and comment for a parking lot or a garage. 
   * Users can let the system compute the best parking lot for them according to the distance, rates, user rating and comments. 
 
+6th Bi-weekly build cycle user stories:
+  * User can choose his/her destination building and see the available parking lots around (within some range) on map. 
+  Subtask:
+  * User can see a list of buildings of Vanderbilt (stored in Sqlite DB). (Yuan)
+  * User can search the building from list by inputting some characters. (Yuan)
+  * User can see parking lot markers shown on map after some building is selected, based on availability, distance and time. (Xiaowei)
+  * User can set the search radius from the centered building. (Xiaowei)
+
 5th Bi-weekly build cycle user stories:
   * User can see sorted distances to all available parking spots shown on map. (Yuan) 
   * User can modify display settings, including (1) parking lots with no available spots shown or not; (2) use time policy filter or not; (3) available spots for people needing special help shown or not; (4) display zone area or not; (Xiaowei)
