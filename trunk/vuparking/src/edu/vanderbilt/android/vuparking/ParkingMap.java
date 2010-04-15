@@ -53,7 +53,8 @@ public class ParkingMap extends MapActivity
 	private final static int MENU_REFRESH = 2;  //refresh parking information
 	private final static int MENU_SETTINGS = 3; //settings
 	private final static int MENU_DISCAL = 4;   //calculate distances
-	private final static int MENU_NULL = 5;     //blank
+	private final static int MENU_SEARCH = 5;   //search parking lots
+	private final static int MENU_RADIUS = 6;   //set search radius
 
 	private final static int TIMEPOLICY = 1;
 	private final static int ZONECOLOR = 3;
@@ -64,6 +65,13 @@ public class ParkingMap extends MapActivity
 	public DistanceAdapter adapter;
 	public MarkerOverlay mOverlay;
 	public Location curLoc;
+	
+	public int destID = 0;    // Default: don't specify.
+	public int Range[] = {200, 300, 500, 800, 1000};
+	public int radius = Range[2]; // Default search radius: 500 m.
+	private final static int NORMAL_MODE = 0;
+	private final static int SEARCH_MODE = 1;
+	public int mode = NORMAL_MODE;
 
 	// Called when creating the activity to show map view.
 	@Override
@@ -125,7 +133,7 @@ public class ParkingMap extends MapActivity
 		{
 			ZoneOverlay zOverlay = new ZoneOverlay(this);
 			addOverlay(zOverlay);
-		}		
+		}
 		mOverlay.refreshOverlay();
 		addOverlay(mOverlay);
 		refreshAdapter();
@@ -195,7 +203,7 @@ public class ParkingMap extends MapActivity
 		menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, "Refresh").setIcon(R.drawable.menu_refresh);
 		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, "Settings").setIcon(R.drawable.menu_setting);
 		menu.add(Menu.NONE, MENU_DISCAL, Menu.NONE, "Distances").setIcon(R.drawable.menu_calculate);
-		menu.add(Menu.NONE, MENU_NULL, Menu.NONE, "Null").setIcon(R.drawable.menu_search);
+		menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, "Select Destination").setIcon(R.drawable.menu_search);
 		return true;
 	}
 
@@ -227,6 +235,9 @@ public class ParkingMap extends MapActivity
 			break;
 		case MENU_DISCAL:
 			showDialog(MENU_DISCAL);
+			break;
+		case MENU_SEARCH:
+			showDialog(MENU_SEARCH);
 			break;
 		}
 		return true;
@@ -261,6 +272,7 @@ public class ParkingMap extends MapActivity
 			{
 				public void onClick(DialogInterface dialog, int which) 
 				{
+					mode = NORMAL_MODE;
 					dialog.dismiss();
 					refreshOverlay();          // Refresh all the overlay items on map.
 				}
@@ -312,10 +324,17 @@ public class ParkingMap extends MapActivity
 				}
 			});
 			break;
+		case MENU_SEARCH:
+			
+			break;
+        case MENU_RADIUS:
+			
+			break;
 		}
+		
 		return builder.create();
 	}
-
+	
 	// Highlight selected parking spot
 	public void markLot(int index)
 	{

@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -41,6 +42,10 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	
 	private final static int FULLSPOT = 0;
 	private final static int DISABLE = 2;
+	
+	private final static int SEARCH_MODE = 1;
+	GeoPoint p;
+	Location dest = new Location("");
 	
 	private Integer[] markers = { R.drawable.yellow, R.drawable.lightblue, R.drawable.green, R.drawable.red, R.drawable.pink, R.drawable.orange};
 	
@@ -86,6 +91,13 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 				double lat = lots.get(j).getLatitude();
 				double lng = lots.get(j).getLongtitude();
 				GeoPoint p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+				// Filter the faraway parking lots in search mode.
+				if (map.mode == SEARCH_MODE)
+				{
+					
+					
+					
+				} 
 				OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
 				// Display handicapped marker
 				if (map.settings[DISABLE] == true)
@@ -115,6 +127,12 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 	// Query database to add all parking markers on map.
 	public void addAllOverlayItems() 
 	{
+		// If in search mode, add destination marker on map. 
+		if (map.mode == SEARCH_MODE && parkingDb.openDB())
+		{
+			
+			
+		}
 		for (int i = 0; i < num_areas; i++)
 		{
 			if (map.zoneOnMap[i])
@@ -131,29 +149,37 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		OverlayItem item = mOverlays.get(index);
 		String[] ZONES = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical", "Visitor"};
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-		dialog.setIcon(R.drawable.garages);
 		dialog.setTitle(item.getTitle());
-		int lotId = Integer.parseInt(item.getSnippet());
+		dialog.setIcon(R.drawable.garages);
+		int Id = Integer.parseInt(item.getSnippet());
 		
 		if (parkingDb.openDB()) 
 		{
-			ParkingLot p = parkingDb.queryParkingById(lotId);
-			if (map.settings[2] == true)
+			// When destination marker tapped
+			if (map.mode == SEARCH_MODE && index == 0)  // first added.
 			{
-				dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
-				          "\nZone: " + ZONES[p.getZone()] +
-				          "\nAddress: " + p.getAddress() +
-				          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-				          "\nHandicapped Spots: " + Integer.toString(p.getNumDisable()));
+				
 			}
 			else
 			{
-				dialog.setMessage("Lot ID: " + Integer.toString(lotId) +
-				          "\nZone: " + ZONES[p.getZone()] +
-				          "\nAddress: " + p.getAddress() +
-				          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
-				          "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
-			}			
+				ParkingLot p = parkingDb.queryParkingById(Id);
+				if (map.settings[2] == true)
+				{
+					dialog.setMessage("Lot ID: " + Integer.toString(Id) +
+					          "\nZone: " + ZONES[p.getZone()] +
+					          "\nAddress: " + p.getAddress() +
+					          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+					          "\nHandicapped Spots: " + Integer.toString(p.getNumDisable()));
+				}
+				else
+				{
+					dialog.setMessage("Lot ID: " + Integer.toString(Id) +
+					          "\nZone: " + ZONES[p.getZone()] +
+					          "\nAddress: " + p.getAddress() +
+					          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
+					          "\nAvailable Spots: " + Integer.toString(p.getNumAvailabe()));
+				}
+			}
 		}
 		else
 			Toast.makeText(mContext, "Database open failed!", Toast.LENGTH_LONG).show();
