@@ -84,39 +84,34 @@ public class Main extends Activity
 	protected Dialog onCreateDialog(int id)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		switch(id)
-		{
-		case MENU_ZONE:			
-			CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical"};
-			builder.setTitle("Please pick your zones");
-		
-			builder.setMultiChoiceItems(zones, zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
-			{			
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) 
-				{
-					zoneChoices[which] = isChecked;
-				}
-			});
-
-			builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
-			{			
-				public void onClick(DialogInterface dialog, int which)
-				{
-					zoneChoices[TOTAL_ZONE-1] = false;
-					dialog.dismiss();
-					toMapView();
-				}
-			});
-
-			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+		CharSequence[] zones = {"Zone1", "Zone2", "Zone3", "Zone4", "Medical"};
+		builder.setTitle("Please pick your zones");
+	
+		builder.setMultiChoiceItems(zones, zoneChoices, new DialogInterface.OnMultiChoiceClickListener() 
+		{			
+			public void onClick(DialogInterface dialog, int which, boolean isChecked) 
 			{
-				public void onClick(DialogInterface dialog, int which) 
-				{
-					dialog.dismiss();
-				}
-			});
-			break;
-		}
+				zoneChoices[which] = isChecked;
+			}
+		});
+
+		builder.setNeutralButton("Done", new DialogInterface.OnClickListener() 
+		{			
+			public void onClick(DialogInterface dialog, int which)
+			{
+				zoneChoices[TOTAL_ZONE-1] = false;
+				dialog.dismiss();
+				toMapView();
+			}
+		});
+
+		builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog, int which) 
+			{
+				dialog.dismiss();
+			}
+		});
 		return builder.create();
 	}
 
@@ -124,13 +119,8 @@ public class Main extends Activity
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog)
 	{
-		switch (id)
-		{
-		case MENU_ZONE:
-			((AlertDialog) dialog).getListView().clearChoices();
-			for (int i = 0; i < TOTAL_ZONE-1; i++)
-				((AlertDialog) dialog).getListView().setItemChecked(i, zoneChoices[i]);
-			break;
-		}		
+		((AlertDialog) dialog).getListView().clearChoices();
+		for (int i = 0; i < TOTAL_ZONE-1; i++)
+			((AlertDialog) dialog).getListView().setItemChecked(i, zoneChoices[i]);
 	}
 }
