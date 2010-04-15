@@ -33,6 +33,7 @@ public class ParkingDBManager
 {
 	private static ParkingDBAdapter adapter;
 	ArrayList<ParkingLot> lots = new ArrayList<ParkingLot>();
+	ArrayList<Building> buildings = new ArrayList<Building>();
 
 	// Type field.
 	public static final int GARAGE = 0;
@@ -45,8 +46,9 @@ public class ParkingDBManager
 	public static final int ZONE4 = 3;
 	public static final int MEDICAL = 4;
 	public static final int VISITOR = 5;
-	public static final int TOTAL_LOTS_NUM=20;
-
+	
+	public static final int TOTAL_LOTS_NUM = 20;
+	public static final int TOTAL_BUILDING_NUM = 24;
 
 	// Open or Create the database.
 	public boolean openDB()
@@ -61,12 +63,19 @@ public class ParkingDBManager
 		if (adapter.checkDb() == false) 
 		{
 			loadParkingData();
+			loadBuildingData();
 			long id;
 			for (int i = 0; i < lots.size(); i++) 
 			{
 				id = adapter.insertLot(lots.get(i));
 				if (id == -1) 
 					return false; 
+			}
+			for (int i = 0; i < buildings.size(); i++)
+			{
+				id = adapter.insertBuilding(buildings.get(i));
+				if (id == -1)
+					return false;
 			}
 		}
 		return true;
@@ -96,6 +105,14 @@ public class ParkingDBManager
         lots.add(new ParkingLot(19, LOT, VISITOR, "Planet beach", "2099 Scarritt Pl", 36.145770, -86.799182, 20, 20, 0, 0.75));
         lots.add(new ParkingLot(20, LOT, VISITOR, "Jess Neely Dr", "", 36.143333,-86.807935, 15, 15, 5, 0.75));
 	}
+	
+	// Initialization of Building Database with Static information.
+	public void loadBuildingData()
+	{
+		buildings.add(new Building(1, "Admissions Office", "2301-2319 West End Ave", 36.148144,-86.805094));
+        buildings.add(new Building(2, "Baker Building", "106 21st Ave S", 36.149868,-86.800405));
+        buildings.add(new Building(3, "Children's Hospital", "Pierce Ave", 36.13935,-86.802369));
+	}
 
 	// Query the database for parking lot by id.
 	public ParkingLot queryParkingById(int id) 
@@ -116,6 +133,20 @@ public class ParkingDBManager
 					c.getInt(c.getColumnIndex(ParkingDBAdapter.KEY_RATE)));
 		c.close();
 		return p;
+	}
+	
+	// Query the database for building by id.
+	public Building queryBuildingById(int id) 
+	{
+		Cursor c = adapter.getBuildingById(id);
+		Building b = null;
+		if (c.moveToFirst())
+			b = new Building(id, c.getString(c.getColumnIndex(ParkingDBAdapter.KEY_BD_NAME)),
+					c.getString(c.getColumnIndex(ParkingDBAdapter.KEY_BD_ADDR)),
+					c.getDouble(c.getColumnIndex(ParkingDBAdapter.KEY_BD_LOC_X)),
+					c.getDouble(c.getColumnIndex(ParkingDBAdapter.KEY_BD_LOC_Y)));
+		c.close();
+		return b;
 	}
 
 	// Query the database for parking lot data of specific zone.
@@ -197,16 +228,12 @@ public class ParkingDBManager
 
 	public CharSequence[] getAllLots()
 	{
-		CharSequence[] lots = new CharSequence[TOTAL_LOTS_NUM];
-		
+		CharSequence[] lots = new CharSequence[TOTAL_LOTS_NUM];		
 		for (int i=0; i<TOTAL_LOTS_NUM; i++)
 		{
 			ParkingLot p = queryParkingById(i);
-			lots[i]=p.getName();
-			
+			lots[i]=p.getName();	
 		}
-		
 		return lots;
-		
 	}
 }
