@@ -325,14 +325,79 @@ public class ParkingMap extends MapActivity
 			});
 			break;
 		case MENU_SEARCH:
+			CharSequence[] buildings = {"I don't wanna specify", "Admissions Office", "Baker Building", "Children's Hospital", "Commons Center", "Featheringill & Jacob Hall",
+					"Graduate School", "Ingram Center", "Institue for Software Integrate Systems", "Law School", "Light Hall", "MC East South Tower", 
+					"Medical Center North", "Medical Research Bldg", "Olin Hall", "Owen School of Management", "Peabody College", "Rand Hall", "Sarratt Commons",
+					"Stevenson Center", "University Club", "Vanderbilt Eye Institute", "Vanderbilt Clinic", "Veterans Hospital", "Wyatt Center"};
+			builder.setTitle("Select your destination");
+			builder.setSingleChoiceItems(buildings, destID, new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) {
+					destID = which;
+				}
+			});
+
+			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+				}
+			});
 			
+			builder.setNeutralButton("Set Search Radius", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					setRadius();
+				}
+			});
+
+			builder.setPositiveButton("Done", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+			        mode = destID == 0? NORMAL_MODE:SEARCH_MODE;
+					refreshOverlay();          // Refresh based on user settings.
+				}
+			});
 			break;
         case MENU_RADIUS:
-			
+        	builder.setTitle("Set Search Radius");
+			CharSequence[] ranges = {"Very near (200 m)", "Near (300 m)", "Medium (500 m)", "Far (800 m)", " Very Far (1 km)"}; 
+			builder.setSingleChoiceItems(ranges, radius, new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) {
+					radius = Range[which];
+				}
+			});
+			builder.setNegativeButton("Back", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+				}
+			});
+
+			builder.setPositiveButton("Done", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					dialog.dismiss();
+					refreshOverlay();
+				}
+			});
 			break;
 		}
 		
 		return builder.create();
+	}
+	
+	// Pop up "set radius" dialog
+	private void setRadius()
+	{
+		showDialog(MENU_RADIUS);
 	}
 	
 	// Highlight selected parking spot
