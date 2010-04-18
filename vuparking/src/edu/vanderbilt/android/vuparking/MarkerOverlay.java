@@ -94,9 +94,10 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 				// Filter the faraway parking lots in search mode.
 				if (map.mode == SEARCH_MODE)
 				{
-					
-					
-					
+					Location location = new Location("");
+				    location.setLatitude(lat);
+				    location.setLongitude(lng);
+				    if (location.distanceTo(dest) > (double)map.radius)   continue;   // Jump to next marker due to distance.
 				} 
 				OverlayItem overlay = new OverlayItem(p, lots.get(j).getName(), Integer.toString(lots.get(j).getId()));
 				// Display handicapped marker
@@ -130,8 +131,19 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 		// If in search mode, add destination marker on map. 
 		if (map.mode == SEARCH_MODE && parkingDb.openDB())
 		{
-			
-			
+			Building b = parkingDb.queryBuildingById(map.destID);
+			if (b != null)
+			{
+				double lat = b.getLatitude();
+				double lng = b.getLongtitude();
+				p = new GeoPoint((int)(lat*1E6),(int)(lng*1E6));
+			    dest.setLatitude(b.getLatitude());
+			    dest.setLongitude(b.getLongtitude());
+				OverlayItem overlay = new OverlayItem(p, b.getName(), Integer.toString(b.getId()));
+				Drawable destMarker = boundCenterBottom(mContext.getResources().getDrawable(R.drawable.dest));
+				overlay.setMarker(destMarker);
+				addOverlay(overlay);     // Don't add into lotMarkers to differentiate from ParkingLots.
+			}		
 		}
 		for (int i = 0; i < num_areas; i++)
 		{
@@ -158,7 +170,12 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 			// When destination marker tapped
 			if (map.mode == SEARCH_MODE && index == 0)  // first added.
 			{
-				
+				Building b = parkingDb.queryBuildingById(Id);
+				if (b != null)
+				{
+					dialog.setIcon(R.drawable.building);
+					dialog.setMessage("Address: " + b.getAddress());
+				}
 			}
 			else
 			{
