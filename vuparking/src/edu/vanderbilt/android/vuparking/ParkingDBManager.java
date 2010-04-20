@@ -112,6 +112,27 @@ public class ParkingDBManager
 		buildings.add(new Building(1, "Admissions Office", "2301-2319 West End Ave", 36.148144,-86.805094));
         buildings.add(new Building(2, "Baker Building", "106 21st Ave S", 36.149868,-86.800405));
         buildings.add(new Building(3, "Children's Hospital", "Pierce Ave", 36.13935,-86.802369));
+        buildings.add(new Building(4, "Commons Center", "1231 18th Ave S", 36.141854,-86.797122));
+        buildings.add(new Building(5, "Featheringill & Jacob Hall", "400 24th Ave S", 36.144748,-86.803184));
+        buildings.add(new Building(6, "Graduate School", "2201 West End Ave", 36.148196,-86.802776));
+        buildings.add(new Building(7, "Ingram Center", "2400 Blakemore Ave", 36.138527,-86.805555));
+        buildings.add(new Building(8, "Institue for Software Integrate Systems", "2015 Terrace PI", 36.149634,-86.799687));
+        buildings.add(new Building(9, "Law School", "Scarritt PI", 36.148118,-86.800523));
+        buildings.add(new Building(10, "Light Hall", "2215 Garland Ave", 36.142071,-86.802648));
+        buildings.add(new Building(11, "MC East South Tower", "1215 21th Ave S", 36.141638,-86.800877));
+        buildings.add(new Building(12, "Medical Center North", "1161 21th Ave S", 36.143301,-86.801167));
+        buildings.add(new Building(13, "Medical Research Bldg", "Edgehill Ave", 36.144609,-86.800631));
+        buildings.add(new Building(14, "Olin Hall", "2400 Highland Ave", 36.142981,-86.805244));
+        buildings.add(new Building(15, "Owen School of Management", "401 21st Ave S", 36.147001,-86.800041));
+        buildings.add(new Building(16, "Peabody College", "Medical Center Dr.", 36.14201,-86.799322));
+        buildings.add(new Building(17, "Rand Hall", "2300 Vanderbilt PI", 36.146429,-86.803227));
+        buildings.add(new Building(18, "Sarratt Commons", "2300 Vanderbilt PI", 36.146351,-86.803796));
+        buildings.add(new Building(19, "Stevenson Center", "2404 Garland Ave", 36.144081,-86.802412));
+        buildings.add(new Building(20, "University Club", "2400 Highland Ave", 36.143561,-86.804311));
+        buildings.add(new Building(21, "Vanderbilt Eye Institute", "Pierce Ave", 36.139749,-86.803678));
+        buildings.add(new Building(22, "Vanderbilt Clinic", "1211 Medical Center Dr", 36.140633,-86.801983));
+        buildings.add(new Building(23, "Veterans Hospital", "1310 24th Ave S", 36.141386,-86.803957));
+        buildings.add(new Building(24, "Wyatt Center", "1930 South Dr", 36.139991,-86.799096));
 	}
 
 	// Query the database for parking lot by id.
