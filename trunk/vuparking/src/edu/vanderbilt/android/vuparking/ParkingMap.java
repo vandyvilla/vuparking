@@ -219,7 +219,7 @@ public class ParkingMap extends MapActivity
 			addOverlay(myLocation);
 			setCenter(myLocation.getCurLocation(), zoomLevel);
 			if (myLocation.signal == false)
-				Toast.makeText(this, "Displaying your default location", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Displaying your current location", Toast.LENGTH_SHORT).show();
 			refreshAdapter();        // Since adapter.sort is not working...
 			break;
 		case MENU_REFRESH:
@@ -277,7 +277,7 @@ public class ParkingMap extends MapActivity
 			});
 			break;
 		case MENU_SETTINGS:
-			CharSequence[] settingItem = {"Include full occupied lots", "Show after hour parking", "Show handicapped spots", "Display zone areas"};
+			CharSequence[] settingItem = {"Include fully occupied lots", "Show after hour parking", "Show handicapped lots", "Display zone areas"};
 			builder.setTitle("Settings");
 			builder.setMultiChoiceItems(settingItem, settings, new DialogInterface.OnMultiChoiceClickListener() 
 			{
@@ -302,7 +302,7 @@ public class ParkingMap extends MapActivity
 					dialog.dismiss();
 					if (settings[TIMEPOLICY] == true)
 					{
-						String TimePolicy = "Between 4pm and 7am next day, you can park at either zone from ZONE1 to ZONE4 if you have a permit.";
+						String TimePolicy = "From 4pm to 7am the next day, you can park at any lots from ZONE1 to ZONE4 if you have a permit.";
 						Toast.makeText(getBaseContext(), TimePolicy, Toast.LENGTH_LONG).show(); 
 					}
 					refreshOverlay();          // Refresh based on user settings.
