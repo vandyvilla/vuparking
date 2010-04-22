@@ -99,7 +99,7 @@ public class ParkingDBManager
 		lots.add(new ParkingLot(13, LOT, MEDICAL, "Natchez field", "2964 Dudley Ave", 36.141120, -86.812059, 80, 80, 10, 0));
 		lots.add(new ParkingLot(14, GARAGE, MEDICAL, "Central garage", "2401 Highland Ave", 36.141924,-86.805909, 80, 80, 10, 0));
 		lots.add(new ParkingLot(15, GARAGE, MEDICAL, "South garage", "2376 Children's Way", 36.139454,-86.804375, 80, 80, 10, 0));
-		lots.add(new ParkingLot(16, GARAGE, MEDICAL, "Medical center East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 80, 80, 10, 0));
+		lots.add(new ParkingLot(16, GARAGE, MEDICAL, "MC East South Tower", "1211 Medical Center Dr", 36.141672, -86.800920, 80, 80, 10, 0));
 		lots.add(new ParkingLot(17, GARAGE, MEDICAL, "Vanderbilt Clinic garage", "1499 21st Ave S", 36.140381, -86.800899, 80, 80, 10, 0));
 		lots.add(new ParkingLot(18, GARAGE, VISITOR, "South garage", "1598 24th Ave S", 36.139324, -86.804879, 40, 40, 5, 0.75));
 		lots.add(new ParkingLot(19, LOT, VISITOR, "Planet beach", "2099 Scarritt Pl", 36.145770, -86.799182, 20, 20, 0, 0.75));

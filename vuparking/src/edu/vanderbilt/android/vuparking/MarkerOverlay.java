@@ -185,7 +185,6 @@ public class MarkerOverlay extends ItemizedOverlay<OverlayItem>
 					dialog.setMessage("Lot ID: " + Integer.toString(Id) +
 					          "\nZone: " + ZONES[p.getZone()] +
 					          "\nAddress: " + p.getAddress() +
-					          "\nCapacity: " + Integer.toString(p.getNumSpot()) +
 					          "\nHandicapped Spots: " + Integer.toString(p.getNumDisable()));
 				}
 				else
