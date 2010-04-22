@@ -114,8 +114,6 @@ public class ParkingMap extends MapActivity
 		}
 		if (settings[TIMEPOLICY] == true)     // Applying time policy.
 		{
-			String TimePolicy = "Between 4pm and 7am next day, you can park at either zone from ZONE1 to ZONE4 if you have a permit.";
-			Toast.makeText(this, TimePolicy, Toast.LENGTH_LONG).show(); 
 			Calendar calendar = Calendar.getInstance();
 			int hour = calendar.getTime().getHours();
 			if (Main.zoneChoices[0] || Main.zoneChoices[1] || Main.zoneChoices[2] || Main.zoneChoices[3])
@@ -302,6 +300,11 @@ public class ParkingMap extends MapActivity
 				public void onClick(DialogInterface dialog, int which) 
 				{
 					dialog.dismiss();
+					if (settings[TIMEPOLICY] == true)
+					{
+						String TimePolicy = "Between 4pm and 7am next day, you can park at either zone from ZONE1 to ZONE4 if you have a permit.";
+						Toast.makeText(getBaseContext(), TimePolicy, Toast.LENGTH_LONG).show(); 
+					}
 					refreshOverlay();          // Refresh based on user settings.
 				}
 			});
@@ -325,7 +328,7 @@ public class ParkingMap extends MapActivity
 			});
 			break;
 		case MENU_SEARCH:
-			CharSequence[] buildings = {"I don't wanna specify", "Admissions Office", "Baker Building", "Children's Hospital", "Commons Center", "Featheringill & Jacob Hall",
+			CharSequence[] buildings = {"I don't want to specify", "Admissions Office", "Baker Building", "Children's Hospital", "Commons Center", "Featheringill & Jacob Hall",
 					"Graduate School", "Ingram Center", "Institue for Software Integrate Systems", "Law School", "Light Hall", "MC East South Tower", 
 					"Medical Center North", "Medical Research Bldg", "Olin Hall", "Owen School of Management", "Peabody College", "Rand Hall", "Sarratt Commons",
 					"Stevenson Center", "University Club", "Vanderbilt Eye Institute", "Vanderbilt Clinic", "Veterans Hospital", "Wyatt Center"};
@@ -385,6 +388,7 @@ public class ParkingMap extends MapActivity
 				public void onClick(DialogInterface dialog, int which) 
 				{
 					dialog.dismiss();
+					mode = destID == 0? NORMAL_MODE:SEARCH_MODE;
 					refreshOverlay();
 				}
 			});
