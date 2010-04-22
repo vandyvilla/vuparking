@@ -17,7 +17,7 @@
   * User can choose his/her destination building and see the available parking lots around (within some range) on map. 
   Subtask:
   * User can see a list of buildings of Vanderbilt. (Yuan)
-  * User can see parking lot markers shown on map after some building is selected, based on availability, distance and time. (Xiaowei)
+  * User can see parking lot markers shown on map after a building is selected, based on availability, distance and time. (Xiaowei)
   * User can set the search radius from the centered building. (Xiaowei)
 
 5th Bi-weekly build cycle user stories:
