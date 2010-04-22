@@ -363,6 +363,7 @@ public class ParkingMap extends MapActivity
 					dialog.dismiss();
 			        mode = destID == 0? NORMAL_MODE:SEARCH_MODE;
 					refreshOverlay();          // Refresh based on user settings.
+					markBuilding(destID);
 				}
 			});
 			break;
@@ -390,6 +391,7 @@ public class ParkingMap extends MapActivity
 					dialog.dismiss();
 					mode = destID == 0? NORMAL_MODE:SEARCH_MODE;
 					refreshOverlay();
+					markBuilding(destID);
 				}
 			});
 			break;
@@ -412,6 +414,21 @@ public class ParkingMap extends MapActivity
 		{
 			GeoPoint pt = new GeoPoint((int)(p.getLatitude()*1.0E6), (int)(p.getLongtitude()*1.0E6));
 			setCenter(pt, zoomLevel+2);
+		}
+	}
+	
+	// Highlight selected destination building
+	public void markBuilding(int index)
+	{
+		if (index != 0)
+		{
+			ParkingDBManager ParkingDb = new ParkingDBManager();
+			Building b = ParkingDb.queryBuildingById(index);
+			if (b != null)
+			{
+				GeoPoint pt = new GeoPoint((int)(b.getLatitude()*1.0E6), (int)(b.getLongtitude()*1.0E6));
+				setCenter(pt, zoomLevel+1);
+			}
 		}
 	}
 
